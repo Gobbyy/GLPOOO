@@ -10,6 +10,7 @@ ABOUT THE TEAM
 --------------
 
 The team :
+
 	*Maxime MAURAY
 	*Maxime POULAIN
 	*Olivier PLAU
