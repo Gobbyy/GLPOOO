@@ -33,7 +33,7 @@ public class EternityJFrame3 extends JFrame {
 		splitPane.setRightComponent(splitPane_1);
 		getContentPane().add(splitPane_1, BorderLayout.SOUTH);
 		
-		 ImageIcon icon1 = new ImageIcon("/Users/Maxime/Desktop/1_1.png");
+		 	ImageIcon icon1 = new ImageIcon("/Users/Maxime/Desktop/1_1.png");
 		    ImageIcon icon2 = new ImageIcon("/Users/Maxime/Desktop/1_2.png");
 		    ImageIcon icon3 = new ImageIcon("/Users/Maxime/Desktop/2_1.png");
 		    ImageIcon icon4 = new ImageIcon("/Users/Maxime/Desktop/2_2.png");
@@ -82,6 +82,7 @@ public class EternityJFrame3 extends JFrame {
 		   
 		    splitPane.setLeftComponent(table);
 		    splitPane.setRightComponent(tablebis);
+		    
 	    
 	}
 	private class QuitterAction extends AbstractAction {
