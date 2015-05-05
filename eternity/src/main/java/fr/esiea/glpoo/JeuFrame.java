@@ -36,9 +36,10 @@ public class JeuFrame extends JFrame {
 	JLabel label;
 	int angle = 90;
 	ImageIcon iconrot;
-	String strdr, strdc, strar, strac,strrr,strdd;
-	JTextField textField1,textField2,textField3,textField4,textField5,textField6;
-	
+	String strdr, strdc, strar, strac, strrr, strdd;
+	JTextField textField1, textField2, textField3, textField4, textField5,
+			textField6;
+
 	public static void main(String[] args) {
 		try {
 			JeuFrame frame = new JeuFrame();
@@ -120,20 +121,21 @@ public class JeuFrame extends JFrame {
 
 		splitPane.setLeftComponent(table);
 		contentPane.add(splitPane, BorderLayout.CENTER);
-		
-		
+
 		JButton bouton = new JButton("Modification");
 		bouton.addActionListener(new BoutonListener());
-		JButton rotate = new JButton("Rotation");
+		JButton rotate = new JButton("Rotation Gauche");
 		rotate.addActionListener(new Bouton2Listener());
+		JButton rotate2 = new JButton("Rotation Droite");
+		rotate2.addActionListener(new Bouton3Listener());
 		Box container = Box.createVerticalBox();
 		Box currentLine = null;
 		JLabel tes = new JLabel("MODIFICATION");
 		container.add(tes);
-		
+
 		JLabel test = new JLabel("Entrez les coordonnées de l'image à déplacer");
 		container.add(test);
-		
+
 		textField1 = new JTextField();
 		textField1.setColumns(1);
 		textField1.setMaximumSize(textField1.getPreferredSize());
@@ -142,26 +144,27 @@ public class JeuFrame extends JFrame {
 		textField2.setColumns(1);
 		textField2.setMaximumSize(textField2.getPreferredSize());
 		container.add(textField2);
-		
-		JLabel test1 = new JLabel("Entrez les coordonnées ou vous souhaitez déplacer l'image");
+
+		JLabel test1 = new JLabel(
+				"Entrez les coordonnées ou vous souhaitez déplacer l'image");
 		container.add(test1);
-		
-		textField4 = new JTextField();
-		textField4.setColumns(1);
-		textField4.setMaximumSize(textField4.getPreferredSize());
-		container.add(textField4);
+
 		textField3 = new JTextField();
 		textField3.setColumns(1);
 		textField3.setMaximumSize(textField3.getPreferredSize());
 		container.add(textField3);
-		
+		textField4 = new JTextField();
+		textField4.setColumns(1);
+		textField4.setMaximumSize(textField4.getPreferredSize());
+		container.add(textField4);
+
 		currentLine = Box.createHorizontalBox();
 		currentLine.add(bouton);
 		container.add(currentLine);
 
 		JLabel te = new JLabel("ROTATION");
 		container.add(te);
-		
+
 		JLabel test2 = new JLabel("Entrez les coordonnées de l'image à tourner");
 		container.add(test2);
 
@@ -173,11 +176,12 @@ public class JeuFrame extends JFrame {
 		textField6.setColumns(1);
 		textField6.setMaximumSize(textField6.getPreferredSize());
 		container.add(textField6);
-		
+
 		currentLine = Box.createHorizontalBox();
 		currentLine.add(rotate);
+		currentLine.add(rotate2);
 		container.add(currentLine);
-		
+
 		splitPane.setRightComponent(container);
 	}
 
@@ -206,37 +210,51 @@ public class JeuFrame extends JFrame {
 		model.fireTableDataChanged();
 	}
 
+	// is type of number
+	public static boolean isInteger(String s) {
+		boolean isInteger = true;
+		for (int i = 0; i < s.length() && isInteger; i++) {
+			char c = s.charAt(i);
+			isInteger = isInteger & ((c >= '0' && c <= '3'));
+		}
+		return isInteger;
+	}
+
 	class BoutonListener implements ActionListener {
 		// Redéfinition de la méthode actionPerformed()
 		public void actionPerformed(ActionEvent arg0) {
 
-//			Scanner sc = new Scanner(System.in);
-//			System.out.println("Veuillez saisir departrow :");
-//			String strdr = sc.nextLine();
-//			System.out.println("Vous avez saisi : " + strdr);
-//			System.out.println("Veuillez saisir departcol :");
-//			String strdc = sc.nextLine();
-//			System.out.println("Vous avez saisi : " + strdc);
-//			System.out.println("Veuillez saisir arrivecol :");
-//			String strac = sc.nextLine();
-//			System.out.println("Vous avez saisi : " + strac);
-//			System.out.println("Veuillez saisir arriverow :");
-//			String strar = sc.nextLine();
-//			System.out.println("Vous avez saisi : " + strar);
+			// Scanner sc = new Scanner(System.in);
+			// System.out.println("Veuillez saisir departrow :");
+			// String strdr = sc.nextLine();
+			// System.out.println("Vous avez saisi : " + strdr);
+			// System.out.println("Veuillez saisir departcol :");
+			// String strdc = sc.nextLine();
+			// System.out.println("Vous avez saisi : " + strdc);
+			// System.out.println("Veuillez saisir arrivecol :");
+			// String strac = sc.nextLine();
+			// System.out.println("Vous avez saisi : " + strac);
+			// System.out.println("Veuillez saisir arriverow :");
+			// String strar = sc.nextLine();
+			// System.out.println("Vous avez saisi : " + strar);
 			strdr = textField1.getText();
 			strdc = textField2.getText();
 			strar = textField3.getText();
 			strac = textField4.getText();
-			int departrow;
-			int departcol;
-			int arriverow;
-			int arrivecol;
-			departrow = Integer.parseInt(strdr);
-			departcol = Integer.parseInt(strdc);
-			arriverow = Integer.parseInt(strar);
-			arrivecol = Integer.parseInt(strac);
-			exchange(departrow, departcol, arriverow, arrivecol);
-			model.fireTableDataChanged();
+			int departrow = 0;
+			int departcol = 0;
+			int arriverow = 0;
+			int arrivecol = 0;
+			if (isInteger(strdr) == true && isInteger(strdc) == true
+					&& isInteger(strar) == true && isInteger(strac) == true) {
+				departcol = Integer.parseInt(strdc);
+				arriverow = Integer.parseInt(strar);
+				arrivecol = Integer.parseInt(strac);
+				exchange(departrow, departcol, arriverow, arrivecol);
+				model.fireTableDataChanged();
+			} else {
+
+			}
 		}
 	}
 
@@ -244,23 +262,43 @@ public class JeuFrame extends JFrame {
 	class Bouton2Listener implements ActionListener {
 		// Redéfinition de la méthode actionPerformed()
 		public void actionPerformed(ActionEvent e) {
-//			Scanner sc = new Scanner(System.in);
-//			System.out.println("Veuillez saisir la ligne :");
-//			String strdr = sc.nextLine();
-//			System.out.println("Veuillez saisir la colonne :");
-//			String strdc = sc.nextLine();
+			// Scanner sc = new Scanner(System.in);
+			// System.out.println("Veuillez saisir la ligne :");
+			// String strdr = sc.nextLine();
+			// System.out.println("Veuillez saisir la colonne :");
+			// String strdc = sc.nextLine();
 			strrr = textField5.getText();
 			strdd = textField6.getText();
 			int row, col;
 			row = Integer.parseInt(strrr);
 			col = Integer.parseInt(strdd);
-			String ac = e.getActionCommand();
-			if (ac.equals("CCW"))
-				angle = -90;
-			else
-				angle = 90; // degrees clockwise
-			rotate(row, col);
-			table.setValueAt(iconrot, row, col);
+			if (isInteger(strrr) == true && isInteger(strdd)) {
+					angle = 90; // degrees clockwise
+				rotate(row, col);
+				table.setValueAt(iconrot, row, col);
+			}
 		}
 	}
+	
+	// Classe écoutant notre troisieme bouton
+		class Bouton3Listener implements ActionListener {
+			// Redéfinition de la méthode actionPerformed()
+			public void actionPerformed(ActionEvent e) {
+				// Scanner sc = new Scanner(System.in);
+				// System.out.println("Veuillez saisir la ligne :");
+				// String strdr = sc.nextLine();
+				// System.out.println("Veuillez saisir la colonne :");
+				// String strdc = sc.nextLine();
+				strrr = textField5.getText();
+				strdd = textField6.getText();
+				int row, col;
+				row = Integer.parseInt(strrr);
+				col = Integer.parseInt(strdd);
+				if (isInteger(strrr) == true && isInteger(strdd)) {
+						angle = -90; // degrees clockwise
+					rotate(row, col);
+					table.setValueAt(iconrot, row, col);
+				}
+			}
+		}
 }
