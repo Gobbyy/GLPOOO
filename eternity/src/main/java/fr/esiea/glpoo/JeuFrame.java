@@ -61,37 +61,37 @@ public class JeuFrame extends JFrame {
 		splitPane.setResizeWeight(0.70);
 
 		icon1 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/1_1.png");
+				"src/images/1_1.png");
 		icon2 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/1_2.png");
+				"src/images/1_2.png");
 		icon3 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/1_3.png");
+				"src/images/1_3.png");
 		icon4 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/1_4.png");
+				"src/images/1_4.png");
 		icon5 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/2_1.png");
+				"src/images/2_1.png");
 		icon6 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/2_2.png");
+				"src/images/2_2.png");
 		icon7 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/2_3.png");
+				"src/images/2_3.png");
 		icon8 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/2_4.png");
+				"src/images/2_4.png");
 		icon9 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/3_1.png");
+				"src/images/3_1.png");
 		icon10 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/3_2.png");
+				"src/images/3_2.png");
 		icon11 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/3_3.png");
+				"src/images/3_3.png");
 		icon12 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/3_4.png");
+				"src/images/3_4.png");
 		icon13 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/4_1.png");
+				"src/images/4_1.png");
 		icon14 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/4_2.png");
+				"src/images/4_2.png");
 		icon15 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/4_3.png");
+				"src/images/4_3.png");
 		icon16 = new ImageIcon(
-				"/Users/Maxime/git/GLPOOO/eternity/src/images/4_4.png");
+				"src/images/4_4.png");
 
 		String[] columnNames = { "Section 1", "Section 2", "Section 1",
 				"Section 2" };
