@@ -10,10 +10,10 @@ public class DaoLauncher {
 
         final PieceDAO pieceDao = new CsvPieceDAO();
         final List<Piece> faces = pieceDao.findPiece();
-        System.out.println("Liste Face");
-        for (Piece face : faces) {
-            System.out.println(face.getIdPiece());
-        }
+//        System.out.println("Liste Face");
+//        for (Piece face : faces) {
+//            System.out.println(face.getIdPiece());
+//        }
 
     }
 }

@@ -11,7 +11,7 @@ public class App
 
 	public static void main(String[] args) {
 
-		final JFrame f = new EternityJFrame1();
+		final JFrame f = new AppFrame();
 		f.setVisible(true);
 	}
 }
