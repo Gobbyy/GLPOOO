@@ -11,6 +11,9 @@ public class CsvPieceDAO implements PieceDAO {
 	private final static char SEPARATOR = ',';
 	private final static String DOC = "src/csv/piece.csv";
 
+	final FaceDAO faceDao = new CsvFaceDao();
+	final List<Face> faces = faceDao.findFace();
+
 	public List<Piece> findPiece() {
 
 		final List<String[]> data = readCsvFile(DOC, SEPARATOR);
@@ -21,6 +24,10 @@ public class CsvPieceDAO implements PieceDAO {
 	}
 
 	private List<Piece> dataToPiece(List<String[]> data) {
+		Face face_nord = null;
+		Face face_sud = null;
+		Face face_est = null;
+		Face face_ouest = null;
 		final List<Piece> pieces = new ArrayList<Piece>();
 
 		for (String[] oneData : data) {
@@ -31,15 +38,30 @@ public class CsvPieceDAO implements PieceDAO {
 			final String id_fstr = oneData[4];
 			final String id_fostr = oneData[5];
 
-			
 			final Integer id_piece = (Integer.parseInt(id_piecestr));
-			
-			final Face face_nord;
-			final Face face_sud;
-			final Face face_est;
-			final Face face_ouest;
 
-			final Piece piece = new Piece;
+			for (Face face : faces) {
+				if (Integer.parseInt(id_fnstr) == face.getId()) {
+					face_nord = new Face(Integer.parseInt(id_fnstr),
+							face.getType(), face.getColor());
+				}
+				if (Integer.parseInt(id_fstr) == face.getId()) {
+					face_nord = new Face(Integer.parseInt(id_fstr),
+							face.getType(), face.getColor());
+				}
+				if (Integer.parseInt(id_fostr) == face.getId()) {
+					face_nord = new Face(Integer.parseInt(id_fostr),
+							face.getType(), face.getColor());
+				}
+				if (Integer.parseInt(id_festr) == face.getId()) {
+					face_nord = new Face(Integer.parseInt(id_festr),
+							face.getType(), face.getColor());
+				}
+			}
+
+			final Piece piece = new Piece(id_piece, face_nord, face_sud,
+					face_est, face_ouest);
+			//test
 			pieces.add(piece);
 		}
 
