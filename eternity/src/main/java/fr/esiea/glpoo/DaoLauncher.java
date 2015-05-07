@@ -8,14 +8,11 @@ public class DaoLauncher {
 
     public static void main(String[] args) {
 
-        final FaceDAO faceDao = new CsvFaceDao();
-        final List<Face> faces = faceDao.findFace();
-
+        final PieceDAO pieceDao = new CsvPieceDAO();
+        final List<Piece> faces = pieceDao.findPiece();
         System.out.println("Liste Face");
-        for (Face face : faces) {
-            System.out.println(face.getType());
-            System.out.println(face.getColor());
-            System.out.println(face.getId());
+        for (Piece face : faces) {
+            System.out.println(face.getIdPiece());
         }
 
     }

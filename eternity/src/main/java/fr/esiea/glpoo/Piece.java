@@ -19,6 +19,10 @@ public class Piece {
 		this.face_ouest = face_ouest;
 	}
 
+	public int getIdPiece(){
+		return id_piece;
+	}
+	
 	public Face getNord() {
 		return face_nord;
 	}
