@@ -34,12 +34,12 @@ public class CsvPieceDAO implements PieceDAO {
 			
 			final Integer id_piece = (Integer.parseInt(id_piecestr));
 			
-			final Face face_nord; //où tu rentre la valeur dedans ?
+			final Face face_nord;
 			final Face face_sud;
 			final Face face_est;
 			final Face face_ouest;
 
-			final Piece piece = new Piece(id_piece, face_nord, face_est, face_sud, face_ouest);
+			final Piece piece = new Piece;
 			pieces.add(piece);
 		}
 
