@@ -95,9 +95,9 @@ public class JeuFrame2 extends JFrame {
 		 * {icon1, icon5, icon9,icon13}, {icon2, icon6, icon10,icon14}, {icon3,
 		 * icon7, icon11,icon15}, {icon4, icon8, icon12,icon16},
 		 */
-		{ icon1, icon2, icon3, icon4 }, { icon5, icon6, icon7, icon8 },
-				{ icon9, icon10, icon11, icon12 },
-				{ icon13, icon14, icon15, icon16 },
+		{   }, {  },
+				{  },
+				{  },
 
 		};
 
