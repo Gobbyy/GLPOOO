@@ -70,18 +70,23 @@ public class AppFrame extends JFrame {
 		icon6 = new ImageIcon(
 				"src/colors/yellow.png");
 		
+		 Panel p = new Panel();
+		 p.setLayout(new BorderLayout());
+		 JLabel test = new JLabel(new ImageIcon("src/colors/yellow.png"));
+		 test.setSize(1100, 800);
+//		 JLabel test1 = new JLabel(new ImageIcon("src/colors/rose.png"));
+		 p.add(test,BorderLayout.CENTER);
+//		 p.add(test1,BorderLayout.EAST);
+		 
+		 add(p);
 		
 
-		String[] columnNames = { "Section 1", "Section 2", "Section 1",
-				"Section 2" };
+		String[] columnNames = { "Section 1"//, "Section 2", "Section 1","Section 2" 
+				};
+		
 		Object[][] data = {
-		/*
-		 * {icon1, icon5, icon9,icon13}, {icon2, icon6, icon10,icon14}, {icon3,
-		 * icon7, icon11,icon15}, {icon4, icon8, icon12,icon16},
-		 */
-		{ icon1, icon2, icon3, icon4 }, { icon5, icon6, icon7, icon8 },
-				{ icon9, icon10, icon11, icon12 },
-				{ icon13, icon14, icon15, icon16 },
+		
+		{p},
 
 		};
 
@@ -94,74 +99,74 @@ public class AppFrame extends JFrame {
 
 		table.setRowHeight(160);
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setResizable(false);
+//		table.getColumnModel().getColumn(1).setResizable(false);
+//		table.getColumnModel().getColumn(2).setResizable(false);
+//		table.getColumnModel().getColumn(3).setResizable(false);
 
 		splitPane.setLeftComponent(table);
 		contentPane.add(splitPane, BorderLayout.CENTER);
-
-		JButton bouton = new JButton("Modification");
-		bouton.addActionListener(new BoutonListener());
-		JButton rotate = new JButton("Rotation Gauche");
-		rotate.addActionListener(new Bouton2Listener());
-		JButton rotate2 = new JButton("Rotation Droite");
-		rotate2.addActionListener(new Bouton3Listener());
-		Box container = Box.createVerticalBox();
-		Box currentLine = null;
-		JLabel tes = new JLabel("MODIFICATION");
-		container.add(tes);
-
-		JLabel test = new JLabel("Entrez les coordonnées de l'image à déplacer");
-		container.add(test);
-
-		textField1 = new JTextField();
-		textField1.setColumns(1);
-		textField1.setMaximumSize(textField1.getPreferredSize());
-		container.add(textField1);
-		textField2 = new JTextField();
-		textField2.setColumns(1);
-		textField2.setMaximumSize(textField2.getPreferredSize());
-		container.add(textField2);
-
-		JLabel test1 = new JLabel(
-				"Entrez les coordonnées ou vous souhaitez déplacer l'image");
-		container.add(test1);
-
-		textField3 = new JTextField();
-		textField3.setColumns(1);
-		textField3.setMaximumSize(textField3.getPreferredSize());
-		container.add(textField3);
-		textField4 = new JTextField();
-		textField4.setColumns(1);
-		textField4.setMaximumSize(textField4.getPreferredSize());
-		container.add(textField4);
-
-		currentLine = Box.createHorizontalBox();
-		currentLine.add(bouton);
-		container.add(currentLine);
-
-		JLabel te = new JLabel("ROTATION");
-		container.add(te);
-
-		JLabel test2 = new JLabel("Entrez les coordonnées de l'image à tourner");
-		container.add(test2);
-
-		textField5 = new JTextField();
-		textField5.setColumns(1);
-		textField5.setMaximumSize(textField5.getPreferredSize());
-		container.add(textField5);
-		textField6 = new JTextField();
-		textField6.setColumns(1);
-		textField6.setMaximumSize(textField6.getPreferredSize());
-		container.add(textField6);
-
-		currentLine = Box.createHorizontalBox();
-		currentLine.add(rotate);
-		currentLine.add(rotate2);
-		container.add(currentLine);
-
-		splitPane.setRightComponent(container);
+//
+//		JButton bouton = new JButton("Modification");
+//		bouton.addActionListener(new BoutonListener());
+//		JButton rotate = new JButton("Rotation Gauche");
+//		rotate.addActionListener(new Bouton2Listener());
+//		JButton rotate2 = new JButton("Rotation Droite");
+//		rotate2.addActionListener(new Bouton3Listener());
+//		Box container = Box.createVerticalBox();
+//		Box currentLine = null;
+//		JLabel tes = new JLabel("MODIFICATION");
+//		container.add(tes);
+//
+//		JLabel test = new JLabel("Entrez les coordonnées de l'image à déplacer");
+//		container.add(test);
+//
+//		textField1 = new JTextField();
+//		textField1.setColumns(1);
+//		textField1.setMaximumSize(textField1.getPreferredSize());
+//		container.add(textField1);
+//		textField2 = new JTextField();
+//		textField2.setColumns(1);
+//		textField2.setMaximumSize(textField2.getPreferredSize());
+//		container.add(textField2);
+//
+//		JLabel test1 = new JLabel(
+//				"Entrez les coordonnées ou vous souhaitez déplacer l'image");
+//		container.add(test1);
+//
+//		textField3 = new JTextField();
+//		textField3.setColumns(1);
+//		textField3.setMaximumSize(textField3.getPreferredSize());
+//		container.add(textField3);
+//		textField4 = new JTextField();
+//		textField4.setColumns(1);
+//		textField4.setMaximumSize(textField4.getPreferredSize());
+//		container.add(textField4);
+//
+//		currentLine = Box.createHorizontalBox();
+//		currentLine.add(bouton);
+//		container.add(currentLine);
+//
+//		JLabel te = new JLabel("ROTATION");
+//		container.add(te);
+//
+//		JLabel test2 = new JLabel("Entrez les coordonnées de l'image à tourner");
+//		container.add(test2);
+//
+//		textField5 = new JTextField();
+//		textField5.setColumns(1);
+//		textField5.setMaximumSize(textField5.getPreferredSize());
+//		container.add(textField5);
+//		textField6 = new JTextField();
+//		textField6.setColumns(1);
+//		textField6.setMaximumSize(textField6.getPreferredSize());
+//		container.add(textField6);
+//
+//		currentLine = Box.createHorizontalBox();
+//		currentLine.add(rotate);
+//		currentLine.add(rotate2);
+//		container.add(currentLine);
+//
+//		splitPane.setRightComponent(container);
 	}
 
 	public void exchange(int departrow, int departcol, int arriverow,
