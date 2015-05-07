@@ -2,6 +2,8 @@ package fr.esiea.glpoo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.esiea.glpoo.Face;
 import static fr.esiea.glpoo.CsvFileHelper.readCsvFile;
 import static fr.esiea.glpoo.TypeFace.BORD;
 import static fr.esiea.glpoo.TypeFace.FACE;
