@@ -6,7 +6,6 @@ import java.util.List;
 import fr.esiea.glpoo.Piece;
 import static fr.esiea.glpoo.CsvFileHelper.readCsvFile;
 
-
 public class CsvPieceDAO implements PieceDAO {
 
 	private final static char SEPARATOR = ',';
@@ -18,45 +17,30 @@ public class CsvPieceDAO implements PieceDAO {
 
 		final List<Piece> pieces = dataToPiece(data);
 
-		return pieces ;
+		return pieces;
 	}
 
 	private List<Piece> dataToPiece(List<String[]> data) {
 		final List<Piece> pieces = new ArrayList<Piece>();
 
 		for (String[] oneData : data) {
-//			final String typestr = oneData[0];
-//			final String idstr = oneData[1];
-//			final String couleurstr = oneData[2];
-//
-//			final TypeFace type = typestr.equalsIgnoreCase("B") ? BORD
-//					: FACE;
-//			final Integer id = (Integer.parseInt(idstr));
-//			ColorFace color = null;
-//			
-//			switch (couleurstr) {
-//			case "black":
-//				color = BLACK;
-//				break;
-//			case "blue":
-//				color = BLUE;
-//				break;
-//			case "green":
-//				color = GREEN;
-//				break;
-//			case "rose":
-//				color = ROSE;
-//				break;
-//			case "yellow":
-//				color = YELLOW;
-//				break;
-//			default:
-//				System.out.println("couleur inconnue !!");
-//				break;
-//			}
-//
-//			final Piece piece = new Piece();
-//			pieces.add(piece);
+			final String type = oneData[0];
+			final String id_piecestr = oneData[1];
+			final String id_fnstr = oneData[2];
+			final String id_festr = oneData[3];
+			final String id_fstr = oneData[4];
+			final String id_fostr = oneData[5];
+
+			
+			final Integer id_piece = (Integer.parseInt(id_piecestr));
+			
+			final Face face_nord; 
+			final Face face_sud;
+			final Face face_est;
+			final Face face_ouest;
+
+			final Piece piece = new Piece();
+			pieces.add(piece);
 		}
 
 		return pieces;

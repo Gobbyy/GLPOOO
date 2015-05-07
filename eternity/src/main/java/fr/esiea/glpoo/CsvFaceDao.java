@@ -35,11 +35,10 @@ public class CsvFaceDao implements FaceDAO {
 			final String idstr = oneData[1];
 			final String couleurstr = oneData[2];
 
-			final TypeFace type = typestr.equalsIgnoreCase("B") ? BORD
-					: FACE;
+			final TypeFace type = typestr.equalsIgnoreCase("B") ? BORD : FACE;
 			final Integer id = (Integer.parseInt(idstr));
 			ColorFace color = null;
-			
+
 			switch (couleurstr) {
 			case "black":
 				color = BLACK;
