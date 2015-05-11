@@ -48,7 +48,7 @@ public class AppFrame extends JFrame {
 	public AppFrame() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1400, 675);
+		setBounds(0, 0, 1400, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -56,7 +56,8 @@ public class AppFrame extends JFrame {
 
 		splitPane = new JSplitPane();
 		splitPane.setResizeWeight(0.70);
-
+		
+		
 		icon1 = new ImageIcon(
 				"src/colors/black.png");
 		icon2 = new ImageIcon(
@@ -69,16 +70,15 @@ public class AppFrame extends JFrame {
 				"src/colors/violet.png");
 		icon6 = new ImageIcon(
 				"src/colors/yellow.png");
-		
-		 Panel p = new Panel();
-		 p.setLayout(new BorderLayout());
-		 JLabel test = new JLabel(new ImageIcon("src/colors/yellow.png"));
-		 test.setSize(1100, 800);
-//		 JLabel test1 = new JLabel(new ImageIcon("src/colors/rose.png"));
-		 p.add(test,BorderLayout.CENTER);
-//		 p.add(test1,BorderLayout.EAST);
-		 
-		 add(p);
+		JPanel panel = new JPanel( new GridLayout());
+//		JPanel p = new JPanel(new BorderLayout());
+		JLabel test = new JLabel (new ImageIcon("src/colors/violet.png"));
+
+//		JLabel test1 = new JLabel (new ImageIcon("src/colors/blue.png"));
+		panel.add(test,BorderLayout.WEST);
+//		p.add(test1,BorderLayout.EAST);
+
+		//panel.add(p,BorderLayout.CENTER);
 		
 
 		String[] columnNames = { "Section 1"//, "Section 2", "Section 1","Section 2" 
@@ -86,7 +86,7 @@ public class AppFrame extends JFrame {
 		
 		Object[][] data = {
 		
-		{p},
+		{""},
 
 		};
 
@@ -96,8 +96,8 @@ public class AppFrame extends JFrame {
 				return getValueAt(0, column).getClass();
 			}
 		};
-
-		table.setRowHeight(160);
+		table.setValueAt(panel, 0, 0);
+		//table.setRowHeight(718);
 		table.getColumnModel().getColumn(0).setResizable(false);
 //		table.getColumnModel().getColumn(1).setResizable(false);
 //		table.getColumnModel().getColumn(2).setResizable(false);
