@@ -70,12 +70,14 @@ public class AppFrame extends JFrame {
 				"src/colors/violet.png");
 		icon6 = new ImageIcon(
 				"src/colors/yellow.png");
-		JPanel panel = new JPanel( new GridLayout());
+		BorderLayout a = new BorderLayout();
+		JPanel panel = new JPanel(a);
 //		JPanel p = new JPanel(new BorderLayout());
-		JLabel test = new JLabel (new ImageIcon("src/colors/violet.png"));
-
-//		JLabel test1 = new JLabel (new ImageIcon("src/colors/blue.png"));
-		panel.add(test,BorderLayout.WEST);
+		JLabel test = new JLabel (new ImageIcon("src/images/1_1.png"));
+		JLabel test1 = new JLabel (new ImageIcon("src/colors/blue.png"));
+		panel.add(test,a.NORTH);
+		panel.add(test1,a.SOUTH);
+		
 //		p.add(test1,BorderLayout.EAST);
 
 		//panel.add(p,BorderLayout.CENTER);
@@ -86,7 +88,7 @@ public class AppFrame extends JFrame {
 		
 		Object[][] data = {
 		
-		{""},
+		{}
 
 		};
 
@@ -96,14 +98,14 @@ public class AppFrame extends JFrame {
 				return getValueAt(0, column).getClass();
 			}
 		};
-		table.setValueAt(panel, 0, 0);
+//		table.setValueAt(panel, 0, 0);
 		//table.setRowHeight(718);
-		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0);//.setResizable(false);
 //		table.getColumnModel().getColumn(1).setResizable(false);
 //		table.getColumnModel().getColumn(2).setResizable(false);
 //		table.getColumnModel().getColumn(3).setResizable(false);
 
-		splitPane.setLeftComponent(table);
+		splitPane.setLeftComponent(panel);
 		contentPane.add(splitPane, BorderLayout.CENTER);
 //
 //		JButton bouton = new JButton("Modification");
