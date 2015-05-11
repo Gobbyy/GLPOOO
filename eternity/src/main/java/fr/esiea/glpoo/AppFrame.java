@@ -1,6 +1,8 @@
 package fr.esiea.glpoo;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -10,9 +12,11 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DropMode;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,12 +29,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class AppFrame extends JFrame {
 
 	private JPanel contentPane;
 	public JTable table;
-	ImageIcon icon1, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9,
+	ImageIcon icon1_gauche,icon1_haut,icon1_bas,icon1_droite, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9,
 			icon10, icon11, icon12, icon13, icon14, icon15, icon16;
 	JSplitPane splitPane;
 	DefaultTableModel model;
@@ -40,55 +46,87 @@ public class AppFrame extends JFrame {
 	String strdr, strdc, strar, strac, strrr, strdd;
 	JTextField textField1, textField2, textField3, textField4, textField5,
 			textField6;
+	File path = new File("src/images/");
 	
 	 final PieceDAO pieceDao = new CsvPieceDAO();
      final List<Piece> pieces = pieceDao.findPiece();
      
 
-	public AppFrame() {
+	public AppFrame() throws IOException {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1400, 800);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
 		splitPane = new JSplitPane();
 		splitPane.setResizeWeight(0.70);
 		
+		BufferedImage test = ImageIO.read(new File(path, "1_droite.png"));
+		BufferedImage test_1 = ImageIO.read(new File(path, "1.png"));
+		BufferedImage test_2 = ImageIO.read(new File(path, "1_haut.png"));
+		BufferedImage test_3 = ImageIO.read(new File(path, "1_Bas.png"));
 		
-		icon1 = new ImageIcon(
-				"src/colors/black.png");
-		icon2 = new ImageIcon(
-				"src/colors/blue.png");
-		icon3 = new ImageIcon(
-				"src/colors/green.png");
-		icon4 = new ImageIcon(
-				"src/colors/rose.png");
-		icon5 = new ImageIcon(
-				"src/colors/violet.png");
-		icon6 = new ImageIcon(
-				"src/colors/yellow.png");
+//		icon1_droite = new ImageIcon(
+//				"src/images/1_droite.png");
+//		icon1_haut = new ImageIcon(
+//				"src/images/1_haut.png");
+//		icon1_bas = new ImageIcon(
+//				"src/images/1_Bas.png");
+//		icon1_gauche = new ImageIcon(
+//				"src/images/1.png");
+//		icon2 = new ImageIcon(
+//				"src/images/2.png");
+//		icon3 = new ImageIcon(
+//				"src/colors/green.png");
+//		icon4 = new ImageIcon(
+//				"src/colors/rose.png");
+//		icon5 = new ImageIcon(
+//				"src/colors/violet.png");
+//		icon6 = new ImageIcon(
+//				"src/colors/yellow.png");
+		File img = new File("src/images/1_droite.png");
+		BufferedImage bufferedImage = ImageIO.read(img);
+		ImageIcon imageIcon = new ImageIcon(bufferedImage);
+		File img1 = new File("src/images/1.png");
+		BufferedImage bufferedImage1 = ImageIO.read(img1);
+		ImageIcon imageIcon1 = new ImageIcon(bufferedImage1);
+		File img2 = new File("src/images/1_haut.png");
+		BufferedImage bufferedImage2 = ImageIO.read(img2);
+		ImageIcon imageIcon2 = new ImageIcon(bufferedImage2);
+		File img3 = new File("src/images/1_Bas.png");
+		BufferedImage bufferedImage3 = ImageIO.read(img3);
+		ImageIcon imageIcon3 = new ImageIcon(bufferedImage3);
+		
 		BorderLayout a = new BorderLayout();
 		JPanel panel = new JPanel(a);
-//		JPanel p = new JPanel(new BorderLayout());
-		JLabel test = new JLabel (new ImageIcon("src/images/1_1.png"));
-		JLabel test1 = new JLabel (new ImageIcon("src/colors/blue.png"));
-		panel.add(test,a.NORTH);
-		panel.add(test1,a.SOUTH);
+		panel.setBounds(0, 0, 160,160);
+		JLabel test_gauche = new JLabel (imageIcon1);
+		JLabel test_haut = new JLabel (imageIcon2);
+		JLabel test_droite = new JLabel (imageIcon);
+		JLabel test_bas = new JLabel (imageIcon3);
+		JLabel test_f = new JLabel (icon2);
+		panel.add(test_gauche,a.WEST);
+		panel.add(test_haut,a.NORTH);
+		panel.add(test_droite,a.EAST);
+		panel.add(test_bas,a.SOUTH);
+		panel.add(test_f,a.CENTER);
+		panel.setBackground(Color.WHITE);
+		panel.remove(a.getLayoutComponent(BorderLayout.CENTER));
 		
-//		p.add(test1,BorderLayout.EAST);
+	
+		
 
-		//panel.add(p,BorderLayout.CENTER);
-		
+
 
 		String[] columnNames = { "Section 1"//, "Section 2", "Section 1","Section 2" 
 				};
 		
 		Object[][] data = {
 		
-		{}
+		{""}
 
 		};
 
@@ -99,13 +137,14 @@ public class AppFrame extends JFrame {
 			}
 		};
 //		table.setValueAt(panel, 0, 0);
-		//table.setRowHeight(718);
+		getTableCellRendererComponent(table,panel, true,true,0,0);
+		table.setRowHeight(162);
 		table.getColumnModel().getColumn(0);//.setResizable(false);
 //		table.getColumnModel().getColumn(1).setResizable(false);
 //		table.getColumnModel().getColumn(2).setResizable(false);
 //		table.getColumnModel().getColumn(3).setResizable(false);
 
-		splitPane.setLeftComponent(panel);
+		splitPane.setLeftComponent(table);
 		contentPane.add(splitPane, BorderLayout.CENTER);
 //
 //		JButton bouton = new JButton("Modification");
@@ -170,7 +209,9 @@ public class AppFrame extends JFrame {
 //
 //		splitPane.setRightComponent(container);
 	}
-
+	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+		return table;
+		}
 	public void exchange(int departrow, int departcol, int arriverow,
 			int arrivecol) {
 		Object test = table.getValueAt(arriverow, arrivecol);
@@ -195,6 +236,7 @@ public class AppFrame extends JFrame {
 		iconrot = new ImageIcon(image);
 		model.fireTableDataChanged();
 	}
+	
 
 	// is type of number
 	public static boolean isInteger(String s) {
@@ -288,4 +330,12 @@ public class AppFrame extends JFrame {
 				}
 			}
 		}
+		
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+		        boolean hasFocus, int row, int column)
+		    {
+//		       table.setValueAt(value, row, column);
+		       table.add((Component) value, row,column);
+		        return this;
+		    }
 }
