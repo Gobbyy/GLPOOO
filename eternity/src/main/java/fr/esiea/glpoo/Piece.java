@@ -38,4 +38,5 @@ public class Piece {
 	public Face getOuest() {
 		return face_ouest;
 	}
+	
 }
