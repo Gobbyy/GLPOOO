@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,13 +47,21 @@ public class AppFrame extends JFrame {
 	JTextField textField1, textField2, textField3, textField4, textField5,
 			textField6;
 	File path = new File("src/images/");
-	BufferedImage test,test_1,test_2,test_3;
-	 final PieceDAO pieceDao = new CsvPieceDAO();
-     final List<Piece> pieces = pieceDao.findPiece();
-     
-
+	BufferedImage test, test_1, test_2, test_3;
+	final PieceDAO pieceDao = new CsvPieceDAO();
+	final List<Piece> pieces = pieceDao.findPiece();
+	Piece[][] piece_tab=null;
+	
+	
 	public AppFrame() throws IOException {
-
+		
+		piece_tab = new Piece[4][4];
+	    for(int i =0; i < 4; i++){
+	      for(int j =0; j < 4; j++){
+	    	  piece_tab[i][j]= pieces.get(j +( 4 * i));
+	      }
+	    }
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1400, 800);
 		contentPane = new JPanel();
@@ -60,15 +69,15 @@ public class AppFrame extends JFrame {
 		setContentPane(contentPane);
 
 		splitPane = new JSplitPane();
-		splitPane.setResizeWeight(0.70);
+		splitPane.setResizeWeight(0.80);
 
+		String[] columnNames = { "Section 1", "Section 2", "Section 1",
+				"Section 2" };
 
-		String[] columnNames = { "Section 1", "Section 2", "Section 1","Section 2" 
-				};
-		
 		Object[][] data = {
-		
-		{"","","",""},{"","","",""},{"","","",""},{"","","",""}
+
+		{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }
 
 		};
 
@@ -78,18 +87,21 @@ public class AppFrame extends JFrame {
 				return getValueAt(0, column).getClass();
 			}
 		};
-//		table.setValueAt(panel, 0, 0);
-		for(int i=0; i<4 ;i++){
-			for(int k=0; k<4; k++){
-				addpiece(i,k);
-			}
-		}
 		
-		table.setRowHeight(160);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
+		table.setRowHeight(160);
+		// table.setValueAt(panel, 0, 0);
+		for (int i = 0; i < 4; i++) {
+			for (int k = 0; k < 4; k++) {
+				addpiece(i, k);
+			}
+		}
+
+		
+		
 
 		splitPane.setLeftComponent(table);
 		contentPane.add(splitPane, BorderLayout.CENTER);
@@ -97,9 +109,9 @@ public class AppFrame extends JFrame {
 		JButton bouton = new JButton("Modification");
 		bouton.addActionListener(new BoutonListener());
 		JButton rotate = new JButton("Rotation Gauche");
-//		rotate.addActionListener(new Bouton2Listener());
+		// rotate.addActionListener(new Bouton2Listener());
 		JButton rotate2 = new JButton("Rotation Droite");
-//		rotate2.addActionListener(new Bouton3Listener());
+		// rotate2.addActionListener(new Bouton3Listener());
 		Box container = Box.createVerticalBox();
 		Box currentLine = null;
 		JLabel tes = new JLabel("MODIFICATION");
@@ -156,10 +168,12 @@ public class AppFrame extends JFrame {
 
 		splitPane.setRightComponent(container);
 	}
-	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+
+	public Component getTableCellEditorComponent(JTable table, Object value,
+			boolean isSelected, int row, int column) {
 		return table;
-		}
-	
+	}
+
 	public void exchange(int departrow, int departcol, int arriverow,
 			int arrivecol) {
 		Object test = table.getValueAt(arriverow, arrivecol);
@@ -169,53 +183,70 @@ public class AppFrame extends JFrame {
 	}
 	
 	
-	public void addpiece(int row, int col){
-		int cordx=0, cordy=0;
-		JPanel jp = null,jp1=null,jp2=null,jp3=null;
+	public void addpiece(int row, int col) {
+		int cordx = 0, cordy = 0;
+		JPanel jp = null, jp1 = null, jp2 = null, jp3 = null;
 		BorderLayout a = new BorderLayout();
 		JPanel panel = new JPanel(a);
-		cordy=cordy+col*160;
-		cordx=cordx+row*160;
-		panel.setBounds(cordx,cordy,160,160);
+		cordy = cordy + row * 160;
+		cordx = cordx + col * 160;
+		panel.setBounds(cordx, cordy, 160, 160);
 		panel.setLayout(null);
-		jp = new ImagePanel("src/images/ouest_"+pieces.get(0).getOuest().getColor()+".png");
-		jp.setBounds(0,0, jp.getPreferredSize().width, jp.getPreferredSize().height);
-		jp.setOpaque(false);
-//		jp1 =new ImagePanel("src/images/est_"+pieces.get(0).getEst().getColor()+".png");
-//		jp1.setBounds(76,-2, jp1.getPreferredSize().width, jp1.getPreferredSize().height);
-//		jp1.setOpaque(false);
-		jp2 =new ImagePanel("src/images/Nord_"+pieces.get(0).getNord().getColor()+".png");
-		jp2.setBounds(3,-2, jp2.getPreferredSize().width, jp2.getPreferredSize().height);
-		jp2.setOpaque(false);
-//		jp3 =new ImagePanel("src/images/Sud_"+pieces.get(0).getSud().getColor()+".png");
-//		jp3.setBounds(0,75, jp3.getPreferredSize().width, jp3.getPreferredSize().height);
-//		jp3.setOpaque(false);
 		
-//		panel.add(jp1);
-		panel.add(jp2);
-//		panel.add(jp3);
-		panel.add(jp);
+		System.out.println(piece_tab[row][col].getNord().getColor()); 
+		System.out.println(piece_tab[row][col].getEst().getColor());
+		System.out.println(piece_tab[row][col].getSud().getColor());
+		System.out.println(piece_tab[row][col].getOuest().getColor());
+		
+		
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
 		panel.setBackground(Color.WHITE);
-		getTableCellRendererComponent(table,panel, true,true,row,col);
-		
+		getTableCellRendererComponent(table, panel, true, true, row, col);
+		jp = null;
+		jp1 = null;
+		jp2 = null;
+		jp3 = null;
+
 	}
 
-//	public void rotate(int row, int column) {
-//		int w = 160;
-//		int h =  160;
-//		int type = BufferedImage.TYPE_INT_RGB; // other options, see api
-//		BufferedImage image = new BufferedImage(h, w, type);
-//		Graphics2D g2 = image.createGraphics();
-//		double x = (h - w) / 2.0;
-//		double y = (w - h) / 2.0;
-//		AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-//		at.rotate(Math.toRadians(angle), w / 2.0, h / 2.0);
-//		g2.drawImage((table.getValueAt(row, column)),
-//				at, table);
-//		g2.dispose();
-//		model.fireTableDataChanged();
-//	}
-	
+	// public void rotate(int row, int column) {
+	// int w = 160;
+	// int h = 160;
+	// int type = BufferedImage.TYPE_INT_RGB; // other options, see api
+	// BufferedImage image = new BufferedImage(h, w, type);
+	// Graphics2D g2 = image.createGraphics();
+	// double x = (h - w) / 2.0;
+	// double y = (w - h) / 2.0;
+	// AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+	// at.rotate(Math.toRadians(angle), w / 2.0, h / 2.0);
+	// g2.drawImage((table.getValueAt(row, column)),
+	// at, table);
+	// g2.dispose();
+	// model.fireTableDataChanged();
+	// }
 
 	// is type of number
 	public static boolean isInteger(String s) {
@@ -266,55 +297,54 @@ public class AppFrame extends JFrame {
 		}
 	}
 
-//	// Classe écoutant notre second bouton
-//	class Bouton2Listener implements ActionListener {
-//		// Redéfinition de la méthode actionPerformed()
-//		public void actionPerformed(ActionEvent e) {
-//			// Scanner sc = new Scanner(System.in);
-//			// System.out.println("Veuillez saisir la ligne :");
-//			// String strdr = sc.nextLine();
-//			// System.out.println("Veuillez saisir la colonne :");
-//			// String strdc = sc.nextLine();
-//			strrr = textField5.getText();
-//			strdd = textField6.getText();
-//			int row, col;
-//			row = Integer.parseInt(strdd);
-//			col = Integer.parseInt(strrr);
-//			if (isInteger(strrr) == true && isInteger(strdd)) {
-//					angle = 90; // degrees clockwise
-//				rotate(row, col);
-//				table.setValueAt(iconrot, row, col);
-//			}
-//		}
-//	}
-//	
+	// // Classe écoutant notre second bouton
+	// class Bouton2Listener implements ActionListener {
+	// // Redéfinition de la méthode actionPerformed()
+	// public void actionPerformed(ActionEvent e) {
+	// // Scanner sc = new Scanner(System.in);
+	// // System.out.println("Veuillez saisir la ligne :");
+	// // String strdr = sc.nextLine();
+	// // System.out.println("Veuillez saisir la colonne :");
+	// // String strdc = sc.nextLine();
+	// strrr = textField5.getText();
+	// strdd = textField6.getText();
+	// int row, col;
+	// row = Integer.parseInt(strdd);
+	// col = Integer.parseInt(strrr);
+	// if (isInteger(strrr) == true && isInteger(strdd)) {
+	// angle = 90; // degrees clockwise
+	// rotate(row, col);
+	// table.setValueAt(iconrot, row, col);
+	// }
+	// }
+	// }
+	//
 	// Classe écoutant notre troisieme bouton
-//		class Bouton3Listener implements ActionListener {
-//			// Redéfinition de la méthode actionPerformed()
-//			public void actionPerformed(ActionEvent e) {
-//				// Scanner sc = new Scanner(System.in);
-//				// System.out.println("Veuillez saisir la ligne :");
-//				// String strdr = sc.nextLine();
-//				// System.out.println("Veuillez saisir la colonne :");
-//				// String strdc = sc.nextLine();
-//				strrr = textField5.getText();
-//				strdd = textField6.getText();
-//				int row, col;
-//				row = Integer.parseInt(strdd);
-//				col = Integer.parseInt(strrr);
-//				if (isInteger(strrr) == true && isInteger(strdd)) {
-//						angle = -90; // degrees clockwise
-//					rotate(row, col);
-//					table.setValueAt(iconrot, row, col);
-//				}
-//			}
-//		}
-		
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-		        boolean hasFocus, int row, int column)
-		    {
-//		       table.setValueAt(value, row, column);
-		       table.add((Component) value, row,column);
-		        return this;
-		    }
+	// class Bouton3Listener implements ActionListener {
+	// // Redéfinition de la méthode actionPerformed()
+	// public void actionPerformed(ActionEvent e) {
+	// // Scanner sc = new Scanner(System.in);
+	// // System.out.println("Veuillez saisir la ligne :");
+	// // String strdr = sc.nextLine();
+	// // System.out.println("Veuillez saisir la colonne :");
+	// // String strdc = sc.nextLine();
+	// strrr = textField5.getText();
+	// strdd = textField6.getText();
+	// int row, col;
+	// row = Integer.parseInt(strdd);
+	// col = Integer.parseInt(strrr);
+	// if (isInteger(strrr) == true && isInteger(strdd)) {
+	// angle = -90; // degrees clockwise
+	// rotate(row, col);
+	// table.setValueAt(iconrot, row, col);
+	// }
+	// }
+	// }
+
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+		// table.setValueAt(value, row, column);
+		table.add((Component) value, row, column);
+		return this;
+	}
 }
