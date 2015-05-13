@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -43,12 +44,11 @@ public class AppFrame extends JFrame {
 	DefaultTableModel model;
 	JLabel label;
 	int angle = 90;
+	int counterRight = 0, counterLeft = 0;
 	ImageIcon iconrot;
 	String strdr, strdc, strar, strac, strrr, strdd;
 	JTextField textField1, textField2, textField3, textField4, textField5,
 			textField6;
-	File path = new File("src/images/");
-	BufferedImage test, test_1, test_2, test_3;
 	final PieceDAO pieceDao = new CsvPieceDAO();
 	final List<Piece> pieces = pieceDao.findPiece();
 	Piece[][] piece_tab = null;
@@ -61,7 +61,6 @@ public class AppFrame extends JFrame {
 				piece_tab[i][j] = pieces.get(j + (4 * i));
 			}
 		}
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1400, 800);
 		contentPane = new JPanel();
@@ -100,6 +99,8 @@ public class AppFrame extends JFrame {
 		rotate.addActionListener(new Bouton2Listener());
 		JButton rotate2 = new JButton("Rotation Droite");
 		rotate2.addActionListener(new Bouton3Listener());
+		JButton verification = new JButton("Verification");
+		verification.addActionListener(new Bouton4Listener());
 		Box container = Box.createVerticalBox();
 		Box currentLine = null;
 		JLabel tes = new JLabel("MODIFICATION");
@@ -153,6 +154,9 @@ public class AppFrame extends JFrame {
 		currentLine.add(rotate);
 		currentLine.add(rotate2);
 		container.add(currentLine);
+		currentLine = Box.createHorizontalBox();
+		currentLine.add(verification);
+		container.add(currentLine);
 
 		splitPane.setRightComponent(container);
 	}
@@ -162,15 +166,13 @@ public class AppFrame extends JFrame {
 		return table;
 	}
 
-	public void exchange(int departrow, int departcol){
+	public void exchange(int departrow, int departcol) {
 
 		int cordy = 0, cordx = 0;
 		JPanel jp = null, jp1 = null, jp2 = null, jp3 = null;
 		BorderLayout a = new BorderLayout();
 		JPanel panel = new JPanel(a);
 
-
-		
 		cordy = cordy + departrow * 160;
 		cordx = cordx + departcol * 160;
 
@@ -198,7 +200,7 @@ public class AppFrame extends JFrame {
 		jp3.setBounds(0, 78, jp3.getPreferredSize().width,
 				jp3.getPreferredSize().height);
 		jp3.setOpaque(false);
-		
+
 		panel.add(jp1);
 		panel.add(jp2);
 		panel.add(jp3);
@@ -206,9 +208,9 @@ public class AppFrame extends JFrame {
 		panel.setBackground(Color.WHITE);
 		getTableCellRendererComponent(table, panel, true, true, departrow,
 				departcol);
-		
+
 		panel.repaint();
-		
+
 	}
 
 	public void addpiece(int row, int col) {
@@ -272,39 +274,204 @@ public class AppFrame extends JFrame {
 		System.out.println(piece_tab[row][col].getEst().getColor());
 		System.out.println(piece_tab[row][col].getSud().getColor());
 		System.out.println(piece_tab[row][col].getOuest().getColor());
+		switch (counterLeft) {
+		case 1:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
 
-		jp = new ImagePanel("src/images/ouest_"
-				+ piece_tab[row][col].getNord().getColor() + ".png");
-		jp.setBounds(0, -2, jp.getPreferredSize().width,
-				jp.getPreferredSize().height);
-		jp.setOpaque(false);
-		jp1 = new ImagePanel("src/images/est_"
-				+ piece_tab[row][col].getSud().getColor() + ".png");
-		jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-				jp1.getPreferredSize().height);
-		jp1.setOpaque(false);
-		jp2 = new ImagePanel("src/images/nord_"
-				+ piece_tab[row][col].getEst().getColor() + ".png");
-		jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-				jp2.getPreferredSize().height);
-		jp2.setOpaque(false);
-		jp3 = new ImagePanel("src/images/sud_"
-				+ piece_tab[row][col].getOuest().getColor() + ".png");
-		jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-				jp3.getPreferredSize().height);
-		jp3.setOpaque(false);
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+		case 2:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
 
-		panel.add(jp1);
-		panel.add(jp2);
-		panel.add(jp3);
-		panel.add(jp);
-		panel.setBackground(Color.WHITE);
-		getTableCellRendererComponent(table, panel, true, true, row, col);
-		panel.repaint();
-		jp = null;
-		jp1 = null;
-		jp2 = null;
-		jp3 = null;
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+		case 3:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
+
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+		case 4:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
+
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+
+		default:
+			System.out.println("probleme rotation Gauche");
+		}
+	}
+
+	public boolean verification() {
+		boolean verif = true;
+
+		for (int i = 0; i < 4; i++) {
+			System.out.println("test [0][i] : "
+					+ piece_tab[0][i].getNord().getColor().toString());
+			if (piece_tab[0][i].getNord().getColor().toString() != "BLACK") {
+				verif = false;
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			System.out.println("test [3][i] : "
+					+ piece_tab[3][i].getSud().getColor().toString());
+			if (piece_tab[3][i].getSud().getColor().toString() != "BLACK") {
+				verif = false;
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			System.out.println("test [i][0] : "
+					+ piece_tab[i][0].getOuest().getColor().toString());
+			if (piece_tab[i][0].getOuest().getColor().toString() != "BLACK") {
+				verif = false;
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			System.out.println("test [i][3] : "
+					+ piece_tab[i][3].getEst().getColor().toString());
+			if (piece_tab[i][3].getEst().getColor().toString() != "BLACK") {
+				verif = false;
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				System.out.println("test [0][j+1,j] : "
+						+ piece_tab[i][j + 1].getOuest().getColor().toString()
+						+ piece_tab[i][j].getEst().getColor().toString());
+				if (piece_tab[i][j + 1].getOuest().getColor().toString() != piece_tab[i][j]
+						.getEst().getColor().toString()) {
+					verif = false;
+				}
+			}
+		}
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				System.out.println("test [0][j+1,j] : "
+						+ piece_tab[i][j].getSud().getColor().toString()
+						+ piece_tab[i + 1][j].getNord().getColor().toString());
+				if (piece_tab[i][j].getSud().getColor().toString() != piece_tab[i + 1][j]
+						.getNord().getColor().toString()) {
+					verif = false;
+				}
+			}
+		}
+
+		return verif;
 	}
 
 	public void rotateRight(int row, int col) {
@@ -316,44 +483,147 @@ public class AppFrame extends JFrame {
 		cordx = cordx + col * 160;
 		panel.setBounds(cordx, cordy, 160, 160);
 		panel.setLayout(null);
+		switch (counterRight) {
+		case 1:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
 
-		System.out.println(piece_tab[row][col].getNord().getColor());
-		System.out.println(piece_tab[row][col].getEst().getColor());
-		System.out.println(piece_tab[row][col].getSud().getColor());
-		System.out.println(piece_tab[row][col].getOuest().getColor());
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+		case 2:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
 
-		jp = new ImagePanel("src/images/ouest_"
-				+ piece_tab[row][col].getSud().getColor() + ".png");
-		jp.setBounds(0, -2, jp.getPreferredSize().width,
-				jp.getPreferredSize().height);
-		jp.setOpaque(false);
-		jp1 = new ImagePanel("src/images/est_"
-				+ piece_tab[row][col].getNord().getColor() + ".png");
-		jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-				jp1.getPreferredSize().height);
-		jp1.setOpaque(false);
-		jp2 = new ImagePanel("src/images/nord_"
-				+ piece_tab[row][col].getOuest().getColor() + ".png");
-		jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-				jp2.getPreferredSize().height);
-		jp2.setOpaque(false);
-		jp3 = new ImagePanel("src/images/sud_"
-				+ piece_tab[row][col].getEst().getColor() + ".png");
-		jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-				jp3.getPreferredSize().height);
-		jp3.setOpaque(false);
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+		case 3:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
 
-		panel.add(jp1);
-		panel.add(jp2);
-		panel.add(jp3);
-		panel.add(jp);
-		panel.setBackground(Color.WHITE);
-		getTableCellRendererComponent(table, panel, true, true, row, col);
-		panel.repaint();
-		jp = null;
-		jp1 = null;
-		jp2 = null;
-		jp3 = null;
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+		case 4:
+			jp = new ImagePanel("src/images/ouest_"
+					+ piece_tab[row][col].getOuest().getColor() + ".png");
+			jp.setBounds(0, -2, jp.getPreferredSize().width,
+					jp.getPreferredSize().height);
+			jp.setOpaque(false);
+			jp1 = new ImagePanel("src/images/est_"
+					+ piece_tab[row][col].getEst().getColor() + ".png");
+			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+					jp1.getPreferredSize().height);
+			jp1.setOpaque(false);
+			jp2 = new ImagePanel("src/images/nord_"
+					+ piece_tab[row][col].getNord().getColor() + ".png");
+			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+					jp2.getPreferredSize().height);
+			jp2.setOpaque(false);
+			jp3 = new ImagePanel("src/images/sud_"
+					+ piece_tab[row][col].getSud().getColor() + ".png");
+			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+					jp3.getPreferredSize().height);
+			jp3.setOpaque(false);
+
+			panel.add(jp1);
+			panel.add(jp2);
+			panel.add(jp3);
+			panel.add(jp);
+			panel.setBackground(Color.WHITE);
+			getTableCellRendererComponent(table, panel, true, true, row, col);
+			panel.repaint();
+			jp = null;
+			jp1 = null;
+			jp2 = null;
+			jp3 = null;
+			break;
+
+		default:
+			System.out.println("probleme rotation droite");
+		}
 	}
 
 	// is type of number
@@ -367,22 +637,9 @@ public class AppFrame extends JFrame {
 	}
 
 	class BoutonListener implements ActionListener {
-		// Redéfinition de la méthode actionPerformed()
+
 		public void actionPerformed(ActionEvent arg0) {
 
-			// Scanner sc = new Scanner(System.in);
-			// System.out.println("Veuillez saisir departrow :");
-			// String strdr = sc.nextLine();
-			// System.out.println("Vous avez saisi : " + strdr);
-			// System.out.println("Veuillez saisir departcol :");
-			// String strdc = sc.nextLine();
-			// System.out.println("Vous avez saisi : " + strdc);
-			// System.out.println("Veuillez saisir arrivecol :");
-			// String strac = sc.nextLine();
-			// System.out.println("Vous avez saisi : " + strac);
-			// System.out.println("Veuillez saisir arriverow :");
-			// String strar = sc.nextLine();
-			// System.out.println("Vous avez saisi : " + strar);
 			strdr = textField1.getText();
 			strdc = textField2.getText();
 			strar = textField3.getText();
@@ -397,14 +654,10 @@ public class AppFrame extends JFrame {
 				departcol = Integer.parseInt(strdr);
 				arriverow = Integer.parseInt(strac);
 				arrivecol = Integer.parseInt(strar);
-//				System.out.println(piece_tab[departrow][departcol]);
-//				System.out.println(piece_tab[arriverow][arrivecol]);
 				Piece[][] piece_tmp = new Piece[1][1];
 				piece_tmp[0][0] = piece_tab[departrow][departcol];
 				piece_tab[departrow][departcol] = piece_tab[arriverow][arrivecol];
 				piece_tab[arriverow][arrivecol] = piece_tmp[0][0];
-//				System.out.println(piece_tab[departrow][departcol]);
-//				System.out.println(piece_tab[arriverow][arrivecol]);
 				exchange(departrow, departcol);
 				exchange(arriverow, arrivecol);
 				model.fireTableDataChanged();
@@ -414,15 +667,9 @@ public class AppFrame extends JFrame {
 		}
 	}
 
-	// Classe écoutant notre second bouton
 	class Bouton2Listener implements ActionListener {
-		// Redéfinition de la méthode actionPerformed()
+
 		public void actionPerformed(ActionEvent e) {
-			// Scanner sc = new Scanner(System.in);
-			// System.out.println("Veuillez saisir la ligne :");
-			// String strdr = sc.nextLine();
-			// System.out.println("Veuillez saisir la colonne :");
-			// String strdc = sc.nextLine();
 			strrr = textField5.getText();
 			strdd = textField6.getText();
 			int row, col;
@@ -430,21 +677,19 @@ public class AppFrame extends JFrame {
 			col = Integer.parseInt(strrr);
 			if (isInteger(strrr) == true && isInteger(strdd)) {
 				angle = 90; // degrees clockwise
+				counterLeft = (counterLeft + 1) % 5;
+				if (counterLeft == 0) {
+					counterLeft++;
+				}
 				rotateLeft(row, col);
 				table.setValueAt(iconrot, row, col);
 			}
 		}
 	}
 
-	// Classe écoutant notre troisieme bouton
 	class Bouton3Listener implements ActionListener {
-		// Redéfinition de la méthode actionPerformed()
+
 		public void actionPerformed(ActionEvent e) {
-			// Scanner sc = new Scanner(System.in);
-			// System.out.println("Veuillez saisir la ligne :");
-			// String strdr = sc.nextLine();
-			// System.out.println("Veuillez saisir la colonne :");
-			// String strdc = sc.nextLine();
 			strrr = textField5.getText();
 			strdd = textField6.getText();
 			int row, col;
@@ -452,15 +697,45 @@ public class AppFrame extends JFrame {
 			col = Integer.parseInt(strrr);
 			if (isInteger(strrr) == true && isInteger(strdd)) {
 				angle = -90; // degrees clockwise
+				counterRight = (counterRight + 1) % 5;
+				if (counterRight == 0) {
+					counterRight++;
+				}
+				System.out.println("counter" + counterRight);
 				rotateRight(row, col);
 				table.setValueAt(iconrot, row, col);
 			}
 		}
 	}
 
+	class Bouton4Listener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			boolean a = verification();
+			System.out.println(a);
+			if (a == true) {
+				Object[] options = { "Rejouer", "Terminer" };
+				int n = JOptionPane.showOptionDialog(null, "Bravo, tu as terminé !!",
+						"Gagné", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
+				System.out.println("n"+n);
+			}else{
+				Object[] options = { "Continuer"};
+				int n = JOptionPane.showOptionDialog(null, "Perdu, essaye encore !",
+						"Perdu", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+				System.out.println("n"+n);
+				 if (n == 0) {
+				
+				 } else {
+				 System.out.println("Cancelled");
+				 }
+			}
+		}
+	}
+
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
-		// table.setValueAt(value, row, column);
 		table.add((Component) value, row, column);
 		return this;
 	}

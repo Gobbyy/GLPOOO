@@ -12,7 +12,7 @@ public class App
 
 	public static void main(String[] args) throws IOException {
 
-		final JFrame f = new AppFrame();
+		final JFrame f = new BeginAppFrame();
 		f.setVisible(true);
 	}
 }
