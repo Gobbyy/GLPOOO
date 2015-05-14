@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,12 +23,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import fr.esiea.glpoo.AppFrame.Bouton3Listener;
-import fr.esiea.glpoo.AppFrame.Bouton4Listener;
-import fr.esiea.glpoo.AppFrame.Bouton5Listener;
-import fr.esiea.glpoo.AppFrame.BoutonListener;
-
 public class AppFrameChrono extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTable table;
 	JSplitPane splitPane;
@@ -46,10 +41,12 @@ public class AppFrameChrono extends JFrame {
 	final PieceDAO pieceDao = new CsvPieceDAO();
 	final List<Piece> pieces = pieceDao.findPiece(path);
 	Piece[][] piece_tab = null;
+	Chrono chrono;
+
 
 	public AppFrameChrono() throws IOException {
 		
-		
+
 		piece_tab = new Piece[4][4];
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -96,8 +93,6 @@ public class AppFrameChrono extends JFrame {
 		rotate2.addActionListener(new Bouton3Listener());
 		JButton verification = new JButton("Verification");
 		verification.addActionListener(new Bouton4Listener());
-		JButton pausechrono = new JButton("Pause Chrono");
-		pausechrono.addActionListener(new Bouton6Listener());
 		Box container = Box.createVerticalBox();
 		Box currentLine = null;
 		JLabel tes = new JLabel("MODIFICATION");
@@ -156,8 +151,9 @@ public class AppFrameChrono extends JFrame {
 		currentLine = Box.createHorizontalBox();
 		currentLine.add(sauvegarde);
 		currentLine = Box.createHorizontalBox();
-		currentLine.add(pausechrono);
-		container.add(currentLine);
+		chrono = new Chrono(120);
+	    currentLine.add(chrono);
+	    container.add(currentLine);
 
 		splitPane.setRightComponent(container);
 	}
@@ -262,8 +258,9 @@ public class AppFrameChrono extends JFrame {
 	}
 
 	public boolean verification() {
-		boolean verif = true;
 
+		boolean verif = true;
+		
 		for (int i = 0; i < 4; i++) {
 			System.out.println("test [0][i] : "
 					+ piece_tab[0][i].getNord().getColor().toString());
@@ -535,6 +532,7 @@ public class AppFrameChrono extends JFrame {
 	class Bouton4Listener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+			chrono.stop();
 			boolean a = verification();
 			System.out.println(a);
 			if (a == true) {
@@ -552,7 +550,7 @@ public class AppFrameChrono extends JFrame {
 						JOptionPane.DEFAULT_OPTION, null, options, options[0]);
 				System.out.println("n" + n);
 				if (n == 0) {
-
+					chrono.start();
 				} else {
 					System.out.println("Cancelled");
 				}
@@ -602,19 +600,15 @@ public class AppFrameChrono extends JFrame {
 
 	}
 	
-	class Bouton6Listener implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-
-
-		}
-
-	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		table.add((Component) value, row, column);
 		return this;
+	}
+	
+	public void fermer(){
+		dispose();
 	}
 
 }
