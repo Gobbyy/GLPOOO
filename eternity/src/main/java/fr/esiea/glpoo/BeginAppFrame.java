@@ -35,11 +35,16 @@ public class BeginAppFrame extends JFrame {
 		
 		JButton btnModeCalme = new JButton("Mode Calme");
 		btnModeCalme.addActionListener(new BoutonListener());
-		btnModeCalme.setBounds(0, 700, 500, 29);
+		btnModeCalme.setBounds(0, 700, 300, 29);
 		panel.add(btnModeCalme);
 		
+		JButton charger = new JButton("Charger Sauvegarde");
+		charger.addActionListener(new BoutonListener1());
+		charger.setBounds(485, 700 , 300, 29);
+		panel.add(charger);
+		
 		JButton btnModeTimer = new JButton("Mode Timer");
-		btnModeTimer.setBounds(750, 700 , 500, 29);
+		btnModeTimer.setBounds(975, 700 , 300, 29);
 		panel.add(btnModeTimer);
 		
 		ImagePanel image = new ImagePanel("src/images/image_debut.png");
@@ -54,6 +59,21 @@ public class BeginAppFrame extends JFrame {
 			JFrame f = null;
 			try {
 				f = new AppFrame();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			f.setVisible(true);
+		}
+	}
+	
+	class BoutonListener1 implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			dispose();
+			JFrame f = null;
+			try {
+				f = new AppFrameSauvegarde();
 				
 			} catch (IOException e) {
 				e.printStackTrace();

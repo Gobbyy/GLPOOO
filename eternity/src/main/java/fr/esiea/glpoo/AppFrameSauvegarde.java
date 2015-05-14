@@ -43,7 +43,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-public class AppFrame extends JFrame {
+public class AppFrameSauvegarde extends JFrame {
 
 	private JPanel contentPane;
 	public JTable table;
@@ -56,12 +56,12 @@ public class AppFrame extends JFrame {
 	String strdr, strdc, strar, strac, strrr, strdd;
 	JTextField textField1, textField2, textField3, textField4, textField5,
 			textField6;
-	String path = "src/csv/piece.csv";
+	String path = "src/csv/sauvegarde.csv";
 	final PieceDAO pieceDao = new CsvPieceDAO();
 	final List<Piece> pieces = pieceDao.findPiece(path);
 	Piece[][] piece_tab = null;
 
-	public AppFrame() throws IOException {
+	public AppFrameSauvegarde() throws IOException {
 
 		piece_tab = new Piece[4][4];
 		for (int i = 0; i < 4; i++) {
@@ -770,7 +770,10 @@ public class AppFrame extends JFrame {
 							output.write(piece_tab[i][j].getEst().getId()+",");
 							output.write(piece_tab[i][j].getSud().getId()+",");
 							output.write(piece_tab[i][j].getOuest().getId()+"");
-							output.write("\r");
+							
+								output.write("\r");
+
+							
 						}
 					}
 					
@@ -797,4 +800,5 @@ public class AppFrame extends JFrame {
 		table.add((Component) value, row, column);
 		return this;
 	}
+	
 }
