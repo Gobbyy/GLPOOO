@@ -724,12 +724,13 @@ public class AppFrameSauvegarde extends JFrame {
 			boolean a = verification();
 			System.out.println(a);
 			if (a == true) {
-				Object[] options = { "Rejouer", "Terminer" };
+				Object[] options = { "Quitter" };
 				int n = JOptionPane.showOptionDialog(null,
 						"Bravo, tu as terminé !!", "Gagné",
 						JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
+						JOptionPane.DEFAULT_OPTION, null, options, options[0]);
 				System.out.println("n" + n);
+				dispose();
 			} else {
 				Object[] options = { "Continuer" };
 				int n = JOptionPane.showOptionDialog(null,

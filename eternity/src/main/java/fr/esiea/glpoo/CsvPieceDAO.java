@@ -9,8 +9,6 @@ import static fr.esiea.glpoo.CsvFileHelper.readCsvFile;
 public class CsvPieceDAO implements PieceDAO {
 
 	private final static char SEPARATOR = ',';
-	private static String DOC = "src/csv/piece.csv";
-
 	final FaceDAO faceDao = new CsvFaceDao();
 	final List<Face> faces = faceDao.findFace();
 	

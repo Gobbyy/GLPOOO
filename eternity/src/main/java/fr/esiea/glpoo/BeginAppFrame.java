@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 public class BeginAppFrame extends JFrame {
 	
 
+	String path = "src/csv/piece_level_1.csv";
+//	String path = "src/csv/piece.csv";
 	
 	public BeginAppFrame(){
 		setBounds(00, 00, 1400, 800);
@@ -44,6 +46,7 @@ public class BeginAppFrame extends JFrame {
 		panel.add(charger);
 		
 		JButton btnModeTimer = new JButton("Mode Timer");
+		btnModeTimer.addActionListener(new BoutonListener2());
 		btnModeTimer.setBounds(975, 700 , 300, 29);
 		panel.add(btnModeTimer);
 		
@@ -58,7 +61,7 @@ public class BeginAppFrame extends JFrame {
 			dispose();
 			JFrame f = null;
 			try {
-				f = new AppFrame();
+				f = new AppFrame(path);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -74,6 +77,21 @@ public class BeginAppFrame extends JFrame {
 			JFrame f = null;
 			try {
 				f = new AppFrameSauvegarde();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			f.setVisible(true);
+		}
+	}
+	
+	class BoutonListener2 implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			dispose();
+			JFrame f = null;
+			try {
+				f = new AppFrameChrono();
 				
 			} catch (IOException e) {
 				e.printStackTrace();

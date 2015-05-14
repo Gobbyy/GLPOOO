@@ -3,15 +3,10 @@ package fr.esiea.glpoo;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Scanner;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +22,10 @@ import java.awt.*;
 
 public class JeuFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTable table;
 	ImageIcon icon1, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9,
@@ -108,6 +107,12 @@ public class JeuFrame extends JFrame {
 
 		model = new DefaultTableModel(data, columnNames);
 		table = new JTable(model) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int column) {
 				return getValueAt(0, column).getClass();
 			}

@@ -3,25 +3,17 @@ package fr.esiea.glpoo;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Timer;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DropMode;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,22 +23,14 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import fr.esiea.glpoo.AppFrame.Bouton3Listener;
+import fr.esiea.glpoo.AppFrame.Bouton4Listener;
+import fr.esiea.glpoo.AppFrame.Bouton5Listener;
+import fr.esiea.glpoo.AppFrame.BoutonListener;
 
-@SuppressWarnings("serial")
-public class AppFrame extends JFrame {
-
+public class AppFrameChrono extends JFrame {
 	private JPanel contentPane;
 	public JTable table;
 	JSplitPane splitPane;
@@ -58,14 +42,14 @@ public class AppFrame extends JFrame {
 	String strdr, strdc, strar, strac, strrr, strdd;
 	JTextField textField1, textField2, textField3, textField4, textField5,
 			textField6;
-	String path = "src/csv/piece.csv";
+	String path = "src/csv/piece_level_1.csv";
 	final PieceDAO pieceDao = new CsvPieceDAO();
-	final List<Piece> pieces;
+	final List<Piece> pieces = pieceDao.findPiece(path);
 	Piece[][] piece_tab = null;
-	
-	public AppFrame(String path) throws IOException {
 
-		pieces = pieceDao.findPiece(path);
+	public AppFrameChrono() throws IOException {
+		
+		
 		piece_tab = new Piece[4][4];
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -112,6 +96,8 @@ public class AppFrame extends JFrame {
 		rotate2.addActionListener(new Bouton3Listener());
 		JButton verification = new JButton("Verification");
 		verification.addActionListener(new Bouton4Listener());
+		JButton pausechrono = new JButton("Pause Chrono");
+		pausechrono.addActionListener(new Bouton6Listener());
 		Box container = Box.createVerticalBox();
 		Box currentLine = null;
 		JLabel tes = new JLabel("MODIFICATION");
@@ -169,6 +155,8 @@ public class AppFrame extends JFrame {
 		container.add(currentLine);
 		currentLine = Box.createHorizontalBox();
 		currentLine.add(sauvegarde);
+		currentLine = Box.createHorizontalBox();
+		currentLine.add(pausechrono);
 		container.add(currentLine);
 
 		splitPane.setRightComponent(container);
@@ -547,39 +535,27 @@ public class AppFrame extends JFrame {
 	class Bouton4Listener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			int n = 0, m;
 			boolean a = verification();
 			System.out.println(a);
 			if (a == true) {
-				Object[] options = { "Niveau 2", "Quitter" };
-				n = JOptionPane.showOptionDialog(null,
-						"Bravo, tu as réussi le niveau 1 !!", "Gagné",
+				Object[] options = { "Rejouer", "Terminer" };
+				int n = JOptionPane.showOptionDialog(null,
+						"Bravo, tu as terminé !!", "Gagné",
 						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
 				System.out.println("n" + n);
-				if (n == 0) {
-
-					String path = "src/csv/piece_level_2.csv";
-					dispose();
-					JFrame f = null;
-					try {
-						f = new AppFrame(path);
-
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					f.setVisible(true);
-				} else {
-					dispose();
-					System.out.println("Cancelled");
-				}
 			} else {
 				Object[] options = { "Continuer" };
-				m = JOptionPane.showOptionDialog(null,
+				int n = JOptionPane.showOptionDialog(null,
 						"Perdu, essaye encore !", "Perdu",
 						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.DEFAULT_OPTION, null, options, options[0]);
-				System.out.println("m" + m);
+				System.out.println("n" + n);
+				if (n == 0) {
+
+				} else {
+					System.out.println("Cancelled");
+				}
 			}
 		}
 	}
@@ -625,10 +601,20 @@ public class AppFrame extends JFrame {
 		}
 
 	}
+	
+	class Bouton6Listener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
+
+		}
+
+	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		table.add((Component) value, row, column);
 		return this;
 	}
+
 }

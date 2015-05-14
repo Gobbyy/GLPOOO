@@ -1,7 +1,5 @@
 package fr.esiea.glpoo;
 
-import java.util.List;
-
 
 public class Piece {
 	private Face face_nord;

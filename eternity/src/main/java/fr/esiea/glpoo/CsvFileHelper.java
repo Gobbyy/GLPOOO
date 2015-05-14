@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 public class CsvFileHelper {
@@ -17,7 +18,8 @@ public class CsvFileHelper {
             final File file = new File(fileName);
             final FileReader fr = new FileReader(file);
 
-            final CSVReader csvReader = new CSVReader(fr, separator);
+            @SuppressWarnings("resource")
+			final CSVReader csvReader = new CSVReader(fr, separator);
 
             String[] nextLine = null;
             while ((nextLine = csvReader.readNext()) != null) {
