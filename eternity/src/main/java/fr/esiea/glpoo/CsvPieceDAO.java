@@ -14,9 +14,9 @@ public class CsvPieceDAO implements PieceDAO {
 	final FaceDAO faceDao = new CsvFaceDao();
 	final List<Face> faces = faceDao.findFace();
 	
-	public List<Piece> findPiece() {
+	public List<Piece> findPiece(String path) {
 
-		final List<String[]> data = readCsvFile(DOC, SEPARATOR);
+		final List<String[]> data = readCsvFile(path, SEPARATOR);
 
 		final List<Piece> pieces = dataToPiece(data);
 
@@ -81,6 +81,12 @@ public class CsvPieceDAO implements PieceDAO {
 		}
 
 		return pieces;
+	}
+
+	@Override
+	public List<Piece> findPiece() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

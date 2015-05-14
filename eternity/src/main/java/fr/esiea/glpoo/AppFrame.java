@@ -34,7 +34,11 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 public class AppFrame extends JFrame {
 
@@ -49,8 +53,9 @@ public class AppFrame extends JFrame {
 	String strdr, strdc, strar, strac, strrr, strdd;
 	JTextField textField1, textField2, textField3, textField4, textField5,
 			textField6;
+	String path = "src/csv/piece.csv";
 	final PieceDAO pieceDao = new CsvPieceDAO();
-	final List<Piece> pieces = pieceDao.findPiece();
+	final List<Piece> pieces = pieceDao.findPiece(path);
 	Piece[][] piece_tab = null;
 
 	public AppFrame() throws IOException {
@@ -95,8 +100,8 @@ public class AppFrame extends JFrame {
 
 		JButton bouton = new JButton("Modification");
 		bouton.addActionListener(new BoutonListener());
-		JButton rotate = new JButton("Rotation Gauche");
-		rotate.addActionListener(new Bouton2Listener());
+		JButton sauvegarde = new JButton("sauvegarde");
+		sauvegarde.addActionListener(new Bouton5Listener());
 		JButton rotate2 = new JButton("Rotation Droite");
 		rotate2.addActionListener(new Bouton3Listener());
 		JButton verification = new JButton("Verification");
@@ -151,11 +156,13 @@ public class AppFrame extends JFrame {
 		container.add(textField6);
 
 		currentLine = Box.createHorizontalBox();
-		currentLine.add(rotate);
 		currentLine.add(rotate2);
 		container.add(currentLine);
 		currentLine = Box.createHorizontalBox();
 		currentLine.add(verification);
+		container.add(currentLine);
+		currentLine = Box.createHorizontalBox();
+		currentLine.add(sauvegarde);
 		container.add(currentLine);
 
 		splitPane.setRightComponent(container);
@@ -260,162 +267,162 @@ public class AppFrame extends JFrame {
 		jp3 = null;
 	}
 
-	public void rotateLeft(int row, int col) {
-		int cordx = 0, cordy = 0;
-		JPanel jp = null, jp1 = null, jp2 = null, jp3 = null;
-		BorderLayout a = new BorderLayout();
-		JPanel panel = new JPanel(a);
-		cordy = cordy + row * 160;
-		cordx = cordx + col * 160;
-		panel.setBounds(cordx, cordy, 160, 160);
-		panel.setLayout(null);
-
-		System.out.println(piece_tab[row][col].getNord().getColor());
-		System.out.println(piece_tab[row][col].getEst().getColor());
-		System.out.println(piece_tab[row][col].getSud().getColor());
-		System.out.println(piece_tab[row][col].getOuest().getColor());
-		switch (counterLeft) {
-		case 1:
-			jp = new ImagePanel("src/images/ouest_"
-					+ piece_tab[row][col].getNord().getColor() + ".png");
-			jp.setBounds(0, -2, jp.getPreferredSize().width,
-					jp.getPreferredSize().height);
-			jp.setOpaque(false);
-			jp1 = new ImagePanel("src/images/est_"
-					+ piece_tab[row][col].getSud().getColor() + ".png");
-			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-					jp1.getPreferredSize().height);
-			jp1.setOpaque(false);
-			jp2 = new ImagePanel("src/images/nord_"
-					+ piece_tab[row][col].getEst().getColor() + ".png");
-			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-					jp2.getPreferredSize().height);
-			jp2.setOpaque(false);
-			jp3 = new ImagePanel("src/images/sud_"
-					+ piece_tab[row][col].getOuest().getColor() + ".png");
-			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-					jp3.getPreferredSize().height);
-			jp3.setOpaque(false);
-
-			panel.add(jp1);
-			panel.add(jp2);
-			panel.add(jp3);
-			panel.add(jp);
-			panel.setBackground(Color.WHITE);
-			getTableCellRendererComponent(table, panel, true, true, row, col);
-			panel.repaint();
-			jp = null;
-			jp1 = null;
-			jp2 = null;
-			jp3 = null;
-			break;
-		case 2:
-			jp = new ImagePanel("src/images/ouest_"
-					+ piece_tab[row][col].getEst().getColor() + ".png");
-			jp.setBounds(0, -2, jp.getPreferredSize().width,
-					jp.getPreferredSize().height);
-			jp.setOpaque(false);
-			jp1 = new ImagePanel("src/images/est_"
-					+ piece_tab[row][col].getOuest().getColor() + ".png");
-			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-					jp1.getPreferredSize().height);
-			jp1.setOpaque(false);
-			jp2 = new ImagePanel("src/images/nord_"
-					+ piece_tab[row][col].getSud().getColor() + ".png");
-			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-					jp2.getPreferredSize().height);
-			jp2.setOpaque(false);
-			jp3 = new ImagePanel("src/images/sud_"
-					+ piece_tab[row][col].getNord().getColor() + ".png");
-			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-					jp3.getPreferredSize().height);
-			jp3.setOpaque(false);
-
-			panel.add(jp1);
-			panel.add(jp2);
-			panel.add(jp3);
-			panel.add(jp);
-			panel.setBackground(Color.WHITE);
-			getTableCellRendererComponent(table, panel, true, true, row, col);
-			panel.repaint();
-			jp = null;
-			jp1 = null;
-			jp2 = null;
-			jp3 = null;
-			break;
-		case 3:
-			jp = new ImagePanel("src/images/ouest_"
-					+ piece_tab[row][col].getSud().getColor() + ".png");
-			jp.setBounds(0, -2, jp.getPreferredSize().width,
-					jp.getPreferredSize().height);
-			jp.setOpaque(false);
-			jp1 = new ImagePanel("src/images/est_"
-					+ piece_tab[row][col].getNord().getColor() + ".png");
-			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-					jp1.getPreferredSize().height);
-			jp1.setOpaque(false);
-			jp2 = new ImagePanel("src/images/nord_"
-					+ piece_tab[row][col].getOuest().getColor() + ".png");
-			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-					jp2.getPreferredSize().height);
-			jp2.setOpaque(false);
-			jp3 = new ImagePanel("src/images/sud_"
-					+ piece_tab[row][col].getEst().getColor() + ".png");
-			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-					jp3.getPreferredSize().height);
-			jp3.setOpaque(false);
-
-			panel.add(jp1);
-			panel.add(jp2);
-			panel.add(jp3);
-			panel.add(jp);
-			panel.setBackground(Color.WHITE);
-			getTableCellRendererComponent(table, panel, true, true, row, col);
-			panel.repaint();
-			jp = null;
-			jp1 = null;
-			jp2 = null;
-			jp3 = null;
-			break;
-		case 4:
-			jp = new ImagePanel("src/images/ouest_"
-					+ piece_tab[row][col].getOuest().getColor() + ".png");
-			jp.setBounds(0, -2, jp.getPreferredSize().width,
-					jp.getPreferredSize().height);
-			jp.setOpaque(false);
-			jp1 = new ImagePanel("src/images/est_"
-					+ piece_tab[row][col].getEst().getColor() + ".png");
-			jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-					jp1.getPreferredSize().height);
-			jp1.setOpaque(false);
-			jp2 = new ImagePanel("src/images/nord_"
-					+ piece_tab[row][col].getNord().getColor() + ".png");
-			jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-					jp2.getPreferredSize().height);
-			jp2.setOpaque(false);
-			jp3 = new ImagePanel("src/images/sud_"
-					+ piece_tab[row][col].getSud().getColor() + ".png");
-			jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-					jp3.getPreferredSize().height);
-			jp3.setOpaque(false);
-
-			panel.add(jp1);
-			panel.add(jp2);
-			panel.add(jp3);
-			panel.add(jp);
-			panel.setBackground(Color.WHITE);
-			getTableCellRendererComponent(table, panel, true, true, row, col);
-			panel.repaint();
-			jp = null;
-			jp1 = null;
-			jp2 = null;
-			jp3 = null;
-			break;
-
-		default:
-			System.out.println("probleme rotation Gauche");
-		}
-	}
+	// public void rotateLeft(int row, int col) {
+	// int cordx = 0, cordy = 0;
+	// JPanel jp = null, jp1 = null, jp2 = null, jp3 = null;
+	// BorderLayout a = new BorderLayout();
+	// JPanel panel = new JPanel(a);
+	// cordy = cordy + row * 160;
+	// cordx = cordx + col * 160;
+	// panel.setBounds(cordx, cordy, 160, 160);
+	// panel.setLayout(null);
+	//
+	// System.out.println(piece_tab[row][col].getNord().getColor());
+	// System.out.println(piece_tab[row][col].getEst().getColor());
+	// System.out.println(piece_tab[row][col].getSud().getColor());
+	// System.out.println(piece_tab[row][col].getOuest().getColor());
+	// switch (counterLeft) {
+	// case 1:
+	// jp = new ImagePanel("src/images/ouest_"
+	// + piece_tab[row][col].getNord().getColor() + ".png");
+	// jp.setBounds(0, -2, jp.getPreferredSize().width,
+	// jp.getPreferredSize().height);
+	// jp.setOpaque(false);
+	// jp1 = new ImagePanel("src/images/est_"
+	// + piece_tab[row][col].getSud().getColor() + ".png");
+	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+	// jp1.getPreferredSize().height);
+	// jp1.setOpaque(false);
+	// jp2 = new ImagePanel("src/images/nord_"
+	// + piece_tab[row][col].getEst().getColor() + ".png");
+	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+	// jp2.getPreferredSize().height);
+	// jp2.setOpaque(false);
+	// jp3 = new ImagePanel("src/images/sud_"
+	// + piece_tab[row][col].getOuest().getColor() + ".png");
+	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+	// jp3.getPreferredSize().height);
+	// jp3.setOpaque(false);
+	//
+	// panel.add(jp1);
+	// panel.add(jp2);
+	// panel.add(jp3);
+	// panel.add(jp);
+	// panel.setBackground(Color.WHITE);
+	// getTableCellRendererComponent(table, panel, true, true, row, col);
+	// panel.repaint();
+	// jp = null;
+	// jp1 = null;
+	// jp2 = null;
+	// jp3 = null;
+	// break;
+	// case 2:
+	// jp = new ImagePanel("src/images/ouest_"
+	// + piece_tab[row][col].getEst().getColor() + ".png");
+	// jp.setBounds(0, -2, jp.getPreferredSize().width,
+	// jp.getPreferredSize().height);
+	// jp.setOpaque(false);
+	// jp1 = new ImagePanel("src/images/est_"
+	// + piece_tab[row][col].getOuest().getColor() + ".png");
+	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+	// jp1.getPreferredSize().height);
+	// jp1.setOpaque(false);
+	// jp2 = new ImagePanel("src/images/nord_"
+	// + piece_tab[row][col].getSud().getColor() + ".png");
+	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+	// jp2.getPreferredSize().height);
+	// jp2.setOpaque(false);
+	// jp3 = new ImagePanel("src/images/sud_"
+	// + piece_tab[row][col].getNord().getColor() + ".png");
+	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+	// jp3.getPreferredSize().height);
+	// jp3.setOpaque(false);
+	//
+	// panel.add(jp1);
+	// panel.add(jp2);
+	// panel.add(jp3);
+	// panel.add(jp);
+	// panel.setBackground(Color.WHITE);
+	// getTableCellRendererComponent(table, panel, true, true, row, col);
+	// panel.repaint();
+	// jp = null;
+	// jp1 = null;
+	// jp2 = null;
+	// jp3 = null;
+	// break;
+	// case 3:
+	// jp = new ImagePanel("src/images/ouest_"
+	// + piece_tab[row][col].getSud().getColor() + ".png");
+	// jp.setBounds(0, -2, jp.getPreferredSize().width,
+	// jp.getPreferredSize().height);
+	// jp.setOpaque(false);
+	// jp1 = new ImagePanel("src/images/est_"
+	// + piece_tab[row][col].getNord().getColor() + ".png");
+	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+	// jp1.getPreferredSize().height);
+	// jp1.setOpaque(false);
+	// jp2 = new ImagePanel("src/images/nord_"
+	// + piece_tab[row][col].getOuest().getColor() + ".png");
+	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+	// jp2.getPreferredSize().height);
+	// jp2.setOpaque(false);
+	// jp3 = new ImagePanel("src/images/sud_"
+	// + piece_tab[row][col].getEst().getColor() + ".png");
+	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+	// jp3.getPreferredSize().height);
+	// jp3.setOpaque(false);
+	//
+	// panel.add(jp1);
+	// panel.add(jp2);
+	// panel.add(jp3);
+	// panel.add(jp);
+	// panel.setBackground(Color.WHITE);
+	// getTableCellRendererComponent(table, panel, true, true, row, col);
+	// panel.repaint();
+	// jp = null;
+	// jp1 = null;
+	// jp2 = null;
+	// jp3 = null;
+	// break;
+	// case 4:
+	// jp = new ImagePanel("src/images/ouest_"
+	// + piece_tab[row][col].getOuest().getColor() + ".png");
+	// jp.setBounds(0, -2, jp.getPreferredSize().width,
+	// jp.getPreferredSize().height);
+	// jp.setOpaque(false);
+	// jp1 = new ImagePanel("src/images/est_"
+	// + piece_tab[row][col].getEst().getColor() + ".png");
+	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
+	// jp1.getPreferredSize().height);
+	// jp1.setOpaque(false);
+	// jp2 = new ImagePanel("src/images/nord_"
+	// + piece_tab[row][col].getNord().getColor() + ".png");
+	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
+	// jp2.getPreferredSize().height);
+	// jp2.setOpaque(false);
+	// jp3 = new ImagePanel("src/images/sud_"
+	// + piece_tab[row][col].getSud().getColor() + ".png");
+	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
+	// jp3.getPreferredSize().height);
+	// jp3.setOpaque(false);
+	//
+	// panel.add(jp1);
+	// panel.add(jp2);
+	// panel.add(jp3);
+	// panel.add(jp);
+	// panel.setBackground(Color.WHITE);
+	// getTableCellRendererComponent(table, panel, true, true, row, col);
+	// panel.repaint();
+	// jp = null;
+	// jp1 = null;
+	// jp2 = null;
+	// jp3 = null;
+	// break;
+	//
+	// default:
+	// System.out.println("probleme rotation Gauche");
+	// }
+	// }
 
 	public boolean verification() {
 		boolean verif = true;
@@ -667,25 +674,25 @@ public class AppFrame extends JFrame {
 		}
 	}
 
-	class Bouton2Listener implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-			strrr = textField5.getText();
-			strdd = textField6.getText();
-			int row, col;
-			row = Integer.parseInt(strdd);
-			col = Integer.parseInt(strrr);
-			if (isInteger(strrr) == true && isInteger(strdd)) {
-				angle = 90; // degrees clockwise
-				counterLeft = (counterLeft + 1) % 5;
-				if (counterLeft == 0) {
-					counterLeft++;
-				}
-				rotateLeft(row, col);
-				table.setValueAt(iconrot, row, col);
-			}
-		}
-	}
+	// class Bouton2Listener implements ActionListener {
+	//
+	// public void actionPerformed(ActionEvent e) {
+	// strrr = textField5.getText();
+	// strdd = textField6.getText();
+	// int row, col;
+	// row = Integer.parseInt(strdd);
+	// col = Integer.parseInt(strrr);
+	// if (isInteger(strrr) == true && isInteger(strdd)) {
+	// angle = 90; // degrees clockwise
+	// counterLeft = (counterLeft + 1) % 5;
+	// if (counterLeft == 0) {
+	// counterLeft++;
+	// }
+	// rotateLeft(row, col);
+	// table.setValueAt(iconrot, row, col);
+	// }
+	// }
+	// }
 
 	class Bouton3Listener implements ActionListener {
 
@@ -715,22 +722,55 @@ public class AppFrame extends JFrame {
 			System.out.println(a);
 			if (a == true) {
 				Object[] options = { "Rejouer", "Terminer" };
-				int n = JOptionPane.showOptionDialog(null, "Bravo, tu as terminé !!",
-						"Gagné", JOptionPane.YES_NO_CANCEL_OPTION,
+				int n = JOptionPane.showOptionDialog(null,
+						"Bravo, tu as terminé !!", "Gagné",
+						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
-				System.out.println("n"+n);
-			}else{
-				Object[] options = { "Continuer"};
-				int n = JOptionPane.showOptionDialog(null, "Perdu, essaye encore !",
-						"Perdu", JOptionPane.YES_NO_CANCEL_OPTION,
+				System.out.println("n" + n);
+			} else {
+				Object[] options = { "Continuer" };
+				int n = JOptionPane.showOptionDialog(null,
+						"Perdu, essaye encore !", "Perdu",
+						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.DEFAULT_OPTION, null, options, options[0]);
-				System.out.println("n"+n);
-				 if (n == 0) {
-				
-				 } else {
-				 System.out.println("Cancelled");
-				 }
+				System.out.println("n" + n);
+				if (n == 0) {
+
+				} else {
+					System.out.println("Cancelled");
+				}
 			}
+		}
+	}
+
+	class Bouton5Listener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			String sfile = "src/csv/sauvegarde.csv";
+
+			OutputStreamWriter out = null;
+			PrintWriter pw = new PrintWriter(out);
+			try {
+				out = new OutputStreamWriter(new FileOutputStream(sfile));
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+					pw.write("# P,id_piece,id_forme_nord,id_forme_est,id_forme_sud,id_forme_ouest");
+					pw.write("P,");
+					pw.write(piece_tab[i][j].getIdPiece()+",");
+					pw.write(piece_tab[i][j].getNord().getId()+",");
+					pw.write(piece_tab[i][j].getEst().getId()+",");
+					pw.write(piece_tab[i][j].getSud().getId()+",");
+					pw.write(piece_tab[i][j].getOuest().getId());
+				}
+			}
+
+			pw.flush();
+			pw.close();
+
 		}
 	}
 
