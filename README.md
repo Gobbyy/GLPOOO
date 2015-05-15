@@ -16,6 +16,9 @@ The team :
 	*Olivier PLAU
 	*William DESCAMPS
 	*Alexandre RASTEL
+	*Nicolas GLAISNER
+	*Benoit AUFFRET
+	*Nicolas MICHAUD
 
 PROJECT DESCRIPTION
 -------------------
