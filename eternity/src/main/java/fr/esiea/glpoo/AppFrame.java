@@ -108,7 +108,7 @@ public class AppFrame extends JFrame {
 		bouton.addActionListener(new BoutonListener());
 		JButton sauvegarde = new JButton("sauvegarde");
 		sauvegarde.addActionListener(new Bouton5Listener());
-		JButton rotate2 = new JButton("Rotation Droite");
+		JButton rotate2 = new JButton("Rotation");
 		rotate2.addActionListener(new Bouton3Listener());
 		JButton verification = new JButton("Verification");
 		verification.addActionListener(new Bouton4Listener());
@@ -617,11 +617,23 @@ public class AppFrame extends JFrame {
 				output.close();
 
 				System.out.println("fichier créé");
+				Object[] options = { "Continuer", "Quitter" };
+				int n = JOptionPane.showOptionDialog(null,
+						"Partie Sauvegardé", "Sauvegarde",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
+				System.out.println("n" + n);
+				if (n == 0) {
+
+				} else {
+					dispose();
+					System.out.println("Cancelled");
+				}
 			} catch (IOException ioe) {
 				System.out.print("Erreur : ");
 				ioe.printStackTrace();
 			}
-
+			
 		}
 
 	}

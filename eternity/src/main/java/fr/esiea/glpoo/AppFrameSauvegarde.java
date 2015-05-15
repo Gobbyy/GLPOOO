@@ -45,6 +45,7 @@ import java.io.PrintWriter;
 
 public class AppFrameSauvegarde extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTable table;
 	JSplitPane splitPane;
@@ -105,7 +106,7 @@ public class AppFrameSauvegarde extends JFrame {
 		bouton.addActionListener(new BoutonListener());
 		JButton sauvegarde = new JButton("sauvegarde");
 		sauvegarde.addActionListener(new Bouton5Listener());
-		JButton rotate2 = new JButton("Rotation Droite");
+		JButton rotate2 = new JButton("Rotation");
 		rotate2.addActionListener(new Bouton3Listener());
 		JButton verification = new JButton("Verification");
 		verification.addActionListener(new Bouton4Listener());
@@ -269,163 +270,6 @@ public class AppFrameSauvegarde extends JFrame {
 		jp2 = null;
 		jp3 = null;
 	}
-
-	// public void rotateLeft(int row, int col) {
-	// int cordx = 0, cordy = 0;
-	// JPanel jp = null, jp1 = null, jp2 = null, jp3 = null;
-	// BorderLayout a = new BorderLayout();
-	// JPanel panel = new JPanel(a);
-	// cordy = cordy + row * 160;
-	// cordx = cordx + col * 160;
-	// panel.setBounds(cordx, cordy, 160, 160);
-	// panel.setLayout(null);
-	//
-	// System.out.println(piece_tab[row][col].getNord().getColor());
-	// System.out.println(piece_tab[row][col].getEst().getColor());
-	// System.out.println(piece_tab[row][col].getSud().getColor());
-	// System.out.println(piece_tab[row][col].getOuest().getColor());
-	// switch (counterLeft) {
-	// case 1:
-	// jp = new ImagePanel("src/images/ouest_"
-	// + piece_tab[row][col].getNord().getColor() + ".png");
-	// jp.setBounds(0, -2, jp.getPreferredSize().width,
-	// jp.getPreferredSize().height);
-	// jp.setOpaque(false);
-	// jp1 = new ImagePanel("src/images/est_"
-	// + piece_tab[row][col].getSud().getColor() + ".png");
-	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-	// jp1.getPreferredSize().height);
-	// jp1.setOpaque(false);
-	// jp2 = new ImagePanel("src/images/nord_"
-	// + piece_tab[row][col].getEst().getColor() + ".png");
-	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-	// jp2.getPreferredSize().height);
-	// jp2.setOpaque(false);
-	// jp3 = new ImagePanel("src/images/sud_"
-	// + piece_tab[row][col].getOuest().getColor() + ".png");
-	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-	// jp3.getPreferredSize().height);
-	// jp3.setOpaque(false);
-	//
-	// panel.add(jp1);
-	// panel.add(jp2);
-	// panel.add(jp3);
-	// panel.add(jp);
-	// panel.setBackground(Color.WHITE);
-	// getTableCellRendererComponent(table, panel, true, true, row, col);
-	// panel.repaint();
-	// jp = null;
-	// jp1 = null;
-	// jp2 = null;
-	// jp3 = null;
-	// break;
-	// case 2:
-	// jp = new ImagePanel("src/images/ouest_"
-	// + piece_tab[row][col].getEst().getColor() + ".png");
-	// jp.setBounds(0, -2, jp.getPreferredSize().width,
-	// jp.getPreferredSize().height);
-	// jp.setOpaque(false);
-	// jp1 = new ImagePanel("src/images/est_"
-	// + piece_tab[row][col].getOuest().getColor() + ".png");
-	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-	// jp1.getPreferredSize().height);
-	// jp1.setOpaque(false);
-	// jp2 = new ImagePanel("src/images/nord_"
-	// + piece_tab[row][col].getSud().getColor() + ".png");
-	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-	// jp2.getPreferredSize().height);
-	// jp2.setOpaque(false);
-	// jp3 = new ImagePanel("src/images/sud_"
-	// + piece_tab[row][col].getNord().getColor() + ".png");
-	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-	// jp3.getPreferredSize().height);
-	// jp3.setOpaque(false);
-	//
-	// panel.add(jp1);
-	// panel.add(jp2);
-	// panel.add(jp3);
-	// panel.add(jp);
-	// panel.setBackground(Color.WHITE);
-	// getTableCellRendererComponent(table, panel, true, true, row, col);
-	// panel.repaint();
-	// jp = null;
-	// jp1 = null;
-	// jp2 = null;
-	// jp3 = null;
-	// break;
-	// case 3:
-	// jp = new ImagePanel("src/images/ouest_"
-	// + piece_tab[row][col].getSud().getColor() + ".png");
-	// jp.setBounds(0, -2, jp.getPreferredSize().width,
-	// jp.getPreferredSize().height);
-	// jp.setOpaque(false);
-	// jp1 = new ImagePanel("src/images/est_"
-	// + piece_tab[row][col].getNord().getColor() + ".png");
-	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-	// jp1.getPreferredSize().height);
-	// jp1.setOpaque(false);
-	// jp2 = new ImagePanel("src/images/nord_"
-	// + piece_tab[row][col].getOuest().getColor() + ".png");
-	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-	// jp2.getPreferredSize().height);
-	// jp2.setOpaque(false);
-	// jp3 = new ImagePanel("src/images/sud_"
-	// + piece_tab[row][col].getEst().getColor() + ".png");
-	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-	// jp3.getPreferredSize().height);
-	// jp3.setOpaque(false);
-	//
-	// panel.add(jp1);
-	// panel.add(jp2);
-	// panel.add(jp3);
-	// panel.add(jp);
-	// panel.setBackground(Color.WHITE);
-	// getTableCellRendererComponent(table, panel, true, true, row, col);
-	// panel.repaint();
-	// jp = null;
-	// jp1 = null;
-	// jp2 = null;
-	// jp3 = null;
-	// break;
-	// case 4:
-	// jp = new ImagePanel("src/images/ouest_"
-	// + piece_tab[row][col].getOuest().getColor() + ".png");
-	// jp.setBounds(0, -2, jp.getPreferredSize().width,
-	// jp.getPreferredSize().height);
-	// jp.setOpaque(false);
-	// jp1 = new ImagePanel("src/images/est_"
-	// + piece_tab[row][col].getEst().getColor() + ".png");
-	// jp1.setBounds(80, -2, jp1.getPreferredSize().width,
-	// jp1.getPreferredSize().height);
-	// jp1.setOpaque(false);
-	// jp2 = new ImagePanel("src/images/nord_"
-	// + piece_tab[row][col].getNord().getColor() + ".png");
-	// jp2.setBounds(0, -2, jp2.getPreferredSize().width,
-	// jp2.getPreferredSize().height);
-	// jp2.setOpaque(false);
-	// jp3 = new ImagePanel("src/images/sud_"
-	// + piece_tab[row][col].getSud().getColor() + ".png");
-	// jp3.setBounds(0, 78, jp3.getPreferredSize().width,
-	// jp3.getPreferredSize().height);
-	// jp3.setOpaque(false);
-	//
-	// panel.add(jp1);
-	// panel.add(jp2);
-	// panel.add(jp3);
-	// panel.add(jp);
-	// panel.setBackground(Color.WHITE);
-	// getTableCellRendererComponent(table, panel, true, true, row, col);
-	// panel.repaint();
-	// jp = null;
-	// jp1 = null;
-	// jp2 = null;
-	// jp3 = null;
-	// break;
-	//
-	// default:
-	// System.out.println("probleme rotation Gauche");
-	// }
-	// }
 
 	public boolean verification() {
 		boolean verif = true;
@@ -636,7 +480,6 @@ public class AppFrameSauvegarde extends JFrame {
 		}
 	}
 
-	// is type of number
 	public static boolean isInteger(String s) {
 		boolean isInteger = true;
 		for (int i = 0; i < s.length() && isInteger; i++) {
@@ -676,26 +519,6 @@ public class AppFrameSauvegarde extends JFrame {
 			}
 		}
 	}
-
-	// class Bouton2Listener implements ActionListener {
-	//
-	// public void actionPerformed(ActionEvent e) {
-	// strrr = textField5.getText();
-	// strdd = textField6.getText();
-	// int row, col;
-	// row = Integer.parseInt(strdd);
-	// col = Integer.parseInt(strrr);
-	// if (isInteger(strrr) == true && isInteger(strdd)) {
-	// angle = 90; // degrees clockwise
-	// counterLeft = (counterLeft + 1) % 5;
-	// if (counterLeft == 0) {
-	// counterLeft++;
-	// }
-	// rotateLeft(row, col);
-	// table.setValueAt(iconrot, row, col);
-	// }
-	// }
-	// }
 
 	class Bouton3Listener implements ActionListener {
 
@@ -751,49 +574,55 @@ public class AppFrameSauvegarde extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 
-				Date maDate = new Date(); 
-				String adressedufichier = "src/csv/sauvegarde.csv";
+			Date maDate = new Date();
+			String adressedufichier = "src/csv/sauvegarde.csv";
 
-				try
-				{
-					PrintWriter pw =  new PrintWriter(new BufferedWriter(new FileWriter("src/csv/sauvegarde.csv", false)));
-					FileWriter fw = new FileWriter(adressedufichier, true);
-					pw.println("");
-					
-					BufferedWriter output = new BufferedWriter(fw);
-					
-					output.write("# P,id_piece,id_forme_nord,id_forme_est,id_forme_sud,id_forme_ouest\r");
-					for (int i = 0; i < 4; i++) {
-						for (int j = 0; j < 4; j++) {
-							output.write("P,");
-							output.write(piece_tab[i][j].getIdPiece()+",");
-							output.write(piece_tab[i][j].getNord().getId()+",");
-							output.write(piece_tab[i][j].getEst().getId()+",");
-							output.write(piece_tab[i][j].getSud().getId()+",");
-							output.write(piece_tab[i][j].getOuest().getId()+"");
-							
-								output.write("\r");
+			try {
+				PrintWriter pw = new PrintWriter(new BufferedWriter(
+						new FileWriter("src/csv/sauvegarde.csv", false)));
+				FileWriter fw = new FileWriter(adressedufichier, true);
+				pw.println("");
 
-							
-						}
+				BufferedWriter output = new BufferedWriter(fw);
+
+				output.write("# P,id_piece,id_forme_nord,id_forme_est,id_forme_sud,id_forme_ouest\r");
+				for (int i = 0; i < 4; i++) {
+					for (int j = 0; j < 4; j++) {
+						output.write("P,");
+						output.write(piece_tab[i][j].getIdPiece() + ",");
+						output.write(piece_tab[i][j].getNord().getId() + ",");
+						output.write(piece_tab[i][j].getEst().getId() + ",");
+						output.write(piece_tab[i][j].getSud().getId() + ",");
+						output.write(piece_tab[i][j].getOuest().getId() + "");
+
+						output.write("\r");
+
 					}
-					
-					
-					output.flush();
-					
-					
-					output.close();
-					
-					System.out.println("fichier créé");
 				}
-				catch(IOException ioe){
-					System.out.print("Erreur : ");
-					ioe.printStackTrace();
-					}
+
+				output.flush();
+
+				output.close();
+
+				System.out.println("fichier créé");
+				Object[] options = { "Continuer", "Quitter" };
+				int n = JOptionPane.showOptionDialog(null, "Partie Sauvegardé",
+						"Sauvegarde", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
+				System.out.println("n" + n);
+				if (n == 0) {
+
+				} else {
+					dispose();
+					System.out.println("Cancelled");
+				}
+			} catch (IOException ioe) {
+				System.out.print("Erreur : ");
+				ioe.printStackTrace();
+			}
 
 		}
-			
-			
+
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
@@ -801,5 +630,5 @@ public class AppFrameSauvegarde extends JFrame {
 		table.add((Component) value, row, column);
 		return this;
 	}
-	
+
 }

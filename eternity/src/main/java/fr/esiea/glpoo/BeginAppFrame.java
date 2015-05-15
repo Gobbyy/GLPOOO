@@ -17,7 +17,7 @@ public class BeginAppFrame extends JFrame {
 	
 
 	String path = "src/csv/piece_level_1.csv";
-//	String path = "src/csv/piece.csv";
+
 	
 	public BeginAppFrame(){
 		setBounds(00, 00, 1400, 800);

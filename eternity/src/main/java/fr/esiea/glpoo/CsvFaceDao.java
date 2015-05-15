@@ -22,9 +22,9 @@ public class CsvFaceDao implements FaceDAO {
 
 		final List<String[]> data = readCsvFile(DOC, SEPARATOR);
 
-		final List<Face> eleves = dataToFace(data);
+		final List<Face> faces = dataToFace(data);
 
-		return eleves;
+		return faces;
 	}
 
 	private List<Face> dataToFace(List<String[]> data) {

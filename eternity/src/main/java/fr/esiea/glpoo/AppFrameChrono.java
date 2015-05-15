@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,9 +44,7 @@ public class AppFrameChrono extends JFrame {
 	Piece[][] piece_tab = null;
 	Chrono chrono;
 
-
 	public AppFrameChrono() throws IOException {
-		
 
 		piece_tab = new Piece[4][4];
 		for (int i = 0; i < 4; i++) {
@@ -89,7 +88,7 @@ public class AppFrameChrono extends JFrame {
 		bouton.addActionListener(new BoutonListener());
 		JButton sauvegarde = new JButton("sauvegarde");
 		sauvegarde.addActionListener(new Bouton5Listener());
-		JButton rotate2 = new JButton("Rotation Droite");
+		JButton rotate2 = new JButton("Rotation");
 		rotate2.addActionListener(new Bouton3Listener());
 		JButton verification = new JButton("Verification");
 		verification.addActionListener(new Bouton4Listener());
@@ -152,8 +151,8 @@ public class AppFrameChrono extends JFrame {
 		currentLine.add(sauvegarde);
 		currentLine = Box.createHorizontalBox();
 		chrono = new Chrono(120);
-	    currentLine.add(chrono);
-	    container.add(currentLine);
+		currentLine.add(chrono);
+		container.add(currentLine);
 
 		splitPane.setRightComponent(container);
 	}
@@ -260,7 +259,7 @@ public class AppFrameChrono extends JFrame {
 	public boolean verification() {
 
 		boolean verif = true;
-		
+
 		for (int i = 0; i < 4; i++) {
 			System.out.println("test [0][i] : "
 					+ piece_tab[0][i].getNord().getColor().toString());
@@ -591,6 +590,17 @@ public class AppFrameChrono extends JFrame {
 				output.close();
 
 				System.out.println("fichier créé");
+				Object[] options = { "Continuer", "Quitter" };
+				int n = JOptionPane.showOptionDialog(null, "Partie Sauvegardé",
+						"Sauvegarde", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.DEFAULT_OPTION, null, options, options[1]);
+				System.out.println("n" + n);
+				if (n == 0) {
+
+				} else {
+					dispose();
+					System.out.println("Cancelled");
+				}
 			} catch (IOException ioe) {
 				System.out.print("Erreur : ");
 				ioe.printStackTrace();
@@ -599,15 +609,14 @@ public class AppFrameChrono extends JFrame {
 		}
 
 	}
-	
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		table.add((Component) value, row, column);
 		return this;
 	}
-	
-	public void fermer(){
+
+	public void fermer() {
 		dispose();
 	}
 
